@@ -1,0 +1,91 @@
+/* will need to ajust the media for login box size for diff. sizes */
+
+body {
+    align-items: center;
+    background-image: url("abstract.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flexbox;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    justify-content: center;
+    min-height: 100vh;
+    -webkit-flex-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+}
+
+.login {
+    align-items: center;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 600px;
+    width: 600px;
+}
+
+.links {
+    color: black;
+    text-decoration: none;
+}
+
+
+.email input {
+    font-size: 20px;
+    height: 30px;
+}
+
+.password input {
+    font-size: 20px;
+    height: 30px;
+}
+
+#logIn {
+    align-items: center;
+    display: grid;
+    padding: 5%;
+}
+
+.login img {
+    height: 150px;
+    width: 150px;
+}
+
+.login h1 {
+    font-size: 48px;
+    margin-bottom: 0%;
+}
+
+#logbtn {
+    font-size: 20px;
+    height: 40px;
+    margin: 3%;
+    text-align: center;
+    width: 100px;
+}
+
+#signbtn {
+    font-size: 20px;
+    height: 40px;
+    margin: 3%;
+    text-align: center;
+    width: 100px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+}
+
+.login h3 {
+    align-items: center;
+    font-size: 36px;
+    margin-bottom: 1%;
+    margin-top: 0%;
+}
