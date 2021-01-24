@@ -1,6 +1,7 @@
 <?php
     // - Mike 1/19/21
-
+    // This is an updated comment. I am updating it to get the remote server
+    // updating correctly. Please ignore.
     // !!! THIS CODE DOES NOT WORK YET !!!
 
     // It is copied from the LAMP Stack Example uploaded to webcourses. This does
