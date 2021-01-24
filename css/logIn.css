@@ -20,6 +20,11 @@ body {
     -webkit-align-items: center;
 }
 
+.links:hover {
+    color: black;
+    text-decoration: none;
+}
+
 .login {
     align-items: center;
     background-color: white;
@@ -44,6 +49,11 @@ body {
 .password input {
     font-size: 20px;
     height: 30px;
+}
+
+#password {
+    display: flex;
+
 }
 
 #logIn {

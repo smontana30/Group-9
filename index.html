@@ -4,31 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Manager</title>
-
+    <script src="js/script.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js"></script>
+    
 </head>
 <body>
-    <div class="container">
-        <div class="nav">
-            <nav class="navbar navbar-light bg-light">
-                <div class="container-fluid">
-                  <span class="navbar-brand mb-0 h1">Navbar</span>
-                  <h2>Contact Page</h2>
-                  <h3>Welcome <span id="UserName">User</span></h3>
-                </div>
-              </nav>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Navbar</span>
         </div>
-        <input type="text" placeholder="Search...">
-        <button id="searchBtn">Search</button>
-        <button id="addbtn" onclick="addContact()">Add Contact</button>
+    </nav>
+    <div class="container">
+        
         <br>
-        <ul id="contact-list">
-           
-        </ul>
+        <div class="contacts">
+            <div class="input-group mb-3">
+                <input placeholder="Search" id="search" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                <button type="button" class="btn btn-secondary">Search</button>
+                <button type="button" class="btn btn-secondary" 
+                data-bs-toggle="modal" data-bs-target="#myModal"
+                id="addbtn">Add Contact</button>    
+            </div>
+            
+            <!-- modal code  -->
+            <div class="modal" id="myModal" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Add Contacts
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
+                                <input id="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Last Name</span>
+                                <input id="lastName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
+                                <input id="phone-number" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  OnClick="createContact()" >
+                                Add Contact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="myModal2" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Add Contacts
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
+                                <input id="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
+                                <input id="phone-number" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >
+                                Update
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="list-group" id="contact-list">
+
+            </ul>
+        </div>
+        
     </div>
     
 </body>
