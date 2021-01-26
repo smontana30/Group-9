@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Contact Manager</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/signUp.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="signin">
-        <h1>Sign up</h1>
-        <h3>Sign up to create an account with Group 9 contact manager</h3>
-        <form action="" method="POST">
+    <div class="signup">
+
+            <h1>Sign up</h1>
+
+        <form id="signUp" action="" method="POST">
             
-            <div class="row g-3">
+            <div class="input-group mb-3">
                 <div class="col">
                   <input type="text" class="form-control" placeholder="First name" aria-label="First name">
                 </div>
@@ -23,22 +28,26 @@
                 </div>
             </div>
 
-            <div class="row">
-            <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Email</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control form-control-lg" id="colFormLabelLg" placeholder="col-form-label-lg">
+            <div class="input-group mb-3">
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="colFormLabelLg" placeholder="Email">
+                </div>
             </div>
+            
+            <div class="input-group mb-3">
+                <div class="col">
+                    <input type="password" class="pass" placeholder="Enter Password" required>
+                </div>
+                <div class="col">
+                    <input type="password" class="pass" placeholder="Confirm Password" required>
+                </div>
             </div>
 
-            <label for="password">Password:</label>
-            <input type="password" class="pass" placeholder="Enter Password" required>
-
-            <label for="password">Confirm Password:</label>
-            <input type="password" class="pass" placeholder="Enter Password" required>
-
-            <button id="signupbtn" type="submit"> 
-                <a href="login.html">Sign up</a>
-            </button>
+            <div class="btn">
+                <button id="signbtn" type="submit" class="btn btn-outline-secondary"> 
+                    <a class="links" href="login.html">Sign up</a>
+                </button>
+            </div>
         </form>
     </div>
     
