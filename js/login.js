@@ -1,6 +1,5 @@
 function login()
 {
-    // This comment will help me check if remote server uplaod works.
     const login_form = document.getElementById("login-form"); 
     const email = login_form.email.value;
     const password = login_form.password.value;
