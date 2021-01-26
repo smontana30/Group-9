@@ -1,11 +1,9 @@
 <?php
-    // - Mike 1/19/21
-    // This is an updated comment. I am updating it to get the remote server
-    // updating correctly. Please ignore.
-    // !!! THIS CODE DOES NOT WORK YET !!!
-
-    // It is copied from the LAMP Stack Example uploaded to webcourses. This does
-    // not represent the final API source. This is an example.
+    // This code is copied and modified from the LAMP Stack Example uploaded to
+    // webcourses. This does not represent the final API source.
+    
+    // TODO:
+    // Figure out how to test API using postman, swagger, etc..
 
     $inData = getRequestInfo();
 
@@ -13,15 +11,9 @@
     $firstName = "";
     $lastName = "";
 
-    // Change this to match our DB login
+    // Change this to match our DB login.
+    // !!! FIGURE OUT HOW TO DO THIS WITHOUT UPLOADING PASSWORD TO GITHUB !!!
     $conn = new mysqli("localhost", "username", "password", "database");
-
-    // TODO (From LAMP Stack Notes):
-    // 1) From cPanel select File Manager
-    // 2) Find public_html directory
-    // 3) Create API directory
-    // 4) Upload API endpoint files into the directory
-    // 5) Use ARC, Postman, CURL, or Swagger to test the api 
 
     if ($conn->connect_error)
     {
@@ -56,18 +48,19 @@
 
     function sendResultInfoAsJson($obj)
     {
-        header('Conent-type: application/json');
+        header('Content-type: application/json');
         echo $obj;
     }
 
     function returnWithError($err)
     {
-        $retVal = '{"id":0,"firstName":"","lastName":"","error:"' . $err . '">';
+        $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+        sendResultInfoAsJson($retValue);
     }
 
     function returnWithInfo($firstName, $lastName, $id)
     {
-        $retVal = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":'
-                   . $lastName . '","error":""}';
+        $retValue = '{"id":' . $id . ',"firstName":"' . $firstName . '","lastName":"' . $lastName . '","error":""}';
+        sendResultInfoAsJson($retValue);
     }
 ?>
