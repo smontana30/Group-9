@@ -11,9 +11,7 @@
     $firstName = "";
     $lastName = "";
 
-    // Change this to match our DB login.
-    // !!! FIGURE OUT HOW TO DO THIS WITHOUT UPLOADING PASSWORD TO GITHUB !!!
-    $conn = new mysqli("localhost", "username", "password", "database");
+    require 'dbconn.php';
 
     if ($conn->connect_error)
     {
