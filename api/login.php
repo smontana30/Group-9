@@ -1,7 +1,6 @@
 <?php
-    // This code is copied and modified from the LAMP Stack Example uploaded to
-    // webcourses. This does not represent the final API source.
-    
+    require 'dbconn.php';
+
     // TODO:
     // Figure out how to test API using postman, swagger, etc..
 
@@ -11,37 +10,36 @@
     $firstName = "";
     $lastName = "";
 
-    require 'dbconn.php';
-
-    if ($conn->connect_error)
+    // Check if the request sent was valid.
+    if (!isset($inData["login"]) && !isset($inData["password"]))
     {
-        returnWithError($conn->connect_error);
+        returnWithError("Invalid login JSON.");
+        return;
+    }
+
+    // SQL command to pull login data
+    $sql = "SELECT ID,FirstName,LastName FROM Users where Login='" . $inData["login"] . "' and Password='" . $inData["password"] . "'";
+    $result = $conn->query($sql);
+    $count = $result->num_rows;
+
+    if ($count > 0)
+    {
+        $row = $result->fetch_assoc();
+        $firstName = $row["FirstName"];
+        $lastName = $row["LastName"];
+        $id = $row["ID"];
+        returnWithInfo($firstName, $lastName, $id);
     }
     else
     {
-        // SQL command to pull login data (get DB people on this)
-        $sql = "SELECT ID,firstName,lastName FROM Users where Login='" . 
-                $inData["login"] . "' and Password='" . $inData["password"] . "'";   
-        $result = $conn->query($sql);
-        if ($result->numrows > 0)
-        {
-            $row = $result->fetch_assoc();
-            $firstName = $row["firstName"];
-            $lastName = $row["lastName"];
-            $id = $row["ID"];
-            returnWithInfo($firstName, $lastName, $id);
-        }
-        else
-        {
-            returnWithError("No records found.");
-        }
-
-        $conn->close();
+        returnWithError("No records found.");
     }
 
+    // Parse request info and return a PHP JSON object.
     function getRequestInfo()
     {
-        return json_decode(file_get_contents('php://input'), true);
+        $json = file_get_contents('php://input');
+        return json_decode($json, true);
     }
 
     function sendResultInfoAsJson($obj)
