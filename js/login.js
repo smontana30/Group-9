@@ -30,7 +30,7 @@ function login()
         if (response.id < 1)
         {
             // Update HTML field to show invalid credentials.
-            // document.getElementById("loginResult").innerHTML = "Incorrect credentials. Please try again.";
+            document.getElementById("error-tag").innerHTML = "Incorrect credentials. Please try again.";
             return;
         }
 
@@ -42,7 +42,7 @@ function login()
     catch (err)
     {
         // If we get here, there was likely an issue with the API.
-        // document.getElementById("loginResult").innerHTML = err.message;
+        document.getElementById("error-tag").innerHTML = err.message;
         console.error("Error:\n" + err);
     }
 }
@@ -85,7 +85,7 @@ function readCookie()
         
         if (userId < 0)
             window.location.href = "login.html";
-        // else
-        //     document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+        else
+            document.getElementById("error-tag").innerHTML = "Logged in as " + firstName + " " + lastName;
     }
 }
