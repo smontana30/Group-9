@@ -21,7 +21,7 @@ function signup()
     {
         const msg = "Passwords don't match.";
         console.log(msg);
-        // document.getElementById("signupResult").innerHTML = msg;
+        document.getElementById("error-tag").innerHTML = msg;
         return;
     }
 
@@ -34,16 +34,16 @@ function signup()
         const response = JSON.parse(xhr.responseText);
         if (response.error.localeCompare("") != 0)
         {
-            // document.getElementById("loginResult").innerHTML = response.error;
+            document.getElementById("error-tag").innerHTML = response.error;
             console.log(response.error);
             return;
         }
-        // window.location.href = "index.html";
+        window.location.href = "index.html";
     }
     catch (err)
     {
         // If we get here, there was likely an issue with the API.
-        // document.getElementById("loginResult").innerHTML = err.message;
+        document.getElementById("error-tag").innerHTML = err.message;
         console.error("Error:\n" + err);
     }
 }
