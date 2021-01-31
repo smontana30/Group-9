@@ -1,3 +1,7 @@
+var userId = -1;
+var firstName = "";
+var lastName = "";
+
 // Login form OnClick event to sign in a user and redirect to index.
 function login()
 {
@@ -5,7 +9,7 @@ function login()
     // - Hash password before making query.
     // - Make it so failed login attempts display in the form.
 
-    const login_form = document.getElementById("login-form"); 
+    const login_form = document.getElementById("login-form");
     const email = login_form.email.value;
     const password = login_form.password.value;
     const url = "http://68.183.59.220/api/login.php";
@@ -26,31 +30,62 @@ function login()
         if (response.id < 1)
         {
             // Update HTML field to show invalid credentials.
+            // document.getElementById("loginResult").innerHTML = "Incorrect credentials. Please try again.";
             return;
         }
 
-        console.log("Login attempt succeeded.")
-
-        // TODO: Make a cookie
+        firstName = response.firstName;
+        lastName = response.lastName;
+        saveCookie();
+        window.location.href = "index.html";
     }
     catch (err)
     {
         // If we get here, there was likely an issue with the API.
+        // document.getElementById("loginResult").innerHTML = err.message;
         console.error("Error:\n" + err);
     }
 }
 
 function logout()
 {
-    // Delete cookie
+    document.cookie = "";
+    userId = -1;
+    firstName = "";
+    lastName = "";
+    document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
+    window.location.href = "login.html";
 }
 
 function saveCookie()
 {
-
+    const minutes = 20;
+    var date = new Date();
+    date.setTime(date.getTime() + (minutes * 60 * 1000));
+    document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
 }
 
 function readCookie()
 {
-    
+    userId = -1;
+    const data = document.cookie;
+    const splits = data.split(",");
+
+    for (var i = 0; i < splits.length; i++)
+    {
+        const s = splits[i].trim();
+        const token = s.split("=");
+
+        if (token[0] == "firstName")
+            firstName = token[1];
+        else if (token[0] == "lastName")
+            lastName = token[1];
+        else if (token[0] == "userId")
+            userId = parseInt(token[1].trim());
+        
+        if (userId < 0)
+            window.location.href = "login.html";
+        // else
+        //     document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+    }
 }
