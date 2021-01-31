@@ -1,0 +1,16 @@
+
+#contact-list {
+    display: flex;
+    
+}
+
+#contact-list li {
+    justify-content: space-around;
+}
+
+#contact-list li button {
+    align-items: flex-end;
+    justify-content: flex-end;
+    float: right;
+    margin: 5px;
+}

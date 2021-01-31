@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
     
 </head>
-<body>
+<body onload="getContacts()">
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">Navbar</span>
@@ -72,10 +72,43 @@
                                 <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
                                 <input id="firstName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                             </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Last Name</span>
+                                <input id="lastName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
                             
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
                                 <input id="phone-number" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >
+                                Update
+                            </button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="myModal3" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            Add Contacts
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group mb-3">
+                                <span id="fName"></span>
+                                <span id="LName"></span>
+                            </div>
+                            
+                            <div class="input-group mb-3">
+                                <span id="phNumber"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
