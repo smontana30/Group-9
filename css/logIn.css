@@ -2,8 +2,9 @@
 
 body {
     align-items: center;
-    background-image: url("../images/abstract.jpg");
+    background-image: url("../images/bg0dark.jpg");
     background-attachment: fixed;
+    background-position: 0px;
     background-size: cover;
     background-repeat: no-repeat;
     display: -webkit-box;
@@ -21,13 +22,13 @@ body {
 }
 
 .links:hover {
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
 .login {
     align-items: center;
-    background-color: white;
+    background-color: rgba(0, 0, 0, 0); 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -36,7 +37,7 @@ body {
 }
 
 .links {
-    color: black;
+    color: white;
     text-decoration: none;
 }
 
@@ -62,12 +63,18 @@ body {
     padding: 5%;
 }
 
+.icon {
+    color: white;
+    padding: 5%;
+}
+
 .login img {
     height: 150px;
     width: 150px;
 }
 
 .login h1 {
+    color: white;
     font-size: 48px;
     margin-bottom: 0%;
 }
@@ -89,12 +96,14 @@ body {
 }
 
 .btn {
+    color: white;
     display: flex;
     justify-content: center;
 }
 
 .login h3 {
     align-items: center;
+    color: white;
     font-size: 36px;
     margin-bottom: 1%;
     margin-top: 0%;
