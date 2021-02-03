@@ -13,22 +13,21 @@
     <div class="signin">
         <h1>Sign up</h1>
         <h3>Sign up to create an account with Group 9 contact manager</h3>
-        <!--
-        <form id="signup-form" onsubmit="signup()" method="POST">-->
+
         <form id="signup-form" onsubmit="signup(); return false">
             <div class="row g-3">
                 <div class="col">
-                  <input type="text" name="firstName" class="form-control" placeholder="First name" aria-label="First name">
+                  <input type="text" name="firstName" class="form-control" placeholder="First name" aria-label="First name" required>
                 </div>
                 <div class="col">
-                  <input type="text" name="lastName" class="form-control" placeholder="Last name" aria-label="Last name">
+                  <input type="text" name="lastName" class="form-control" placeholder="Last name" aria-label="Last name" required>
                 </div>
             </div>
 
             <div class="row">
             <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg">Email</label>
             <div class="col-sm-10">
-                <input type="email" name="email" class="form-control form-control-lg" id="colFormLabelLg" placeholder="col-form-label-lg">
+                <input type="email" name="email" class="form-control form-control-lg" id="colFormLabelLg" placeholder="col-form-label-lg" required>
             </div>
             </div>
 
