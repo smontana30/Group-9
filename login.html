@@ -23,7 +23,9 @@
         <h1> Welcome </h1>
         <h3>Log in to access your contacts</h3>
         <!-- <img src="password.png" alt=""> -->
-        <i class="fas fa-user-circle fa-7x"></i>
+        <span class="icon">
+            <i class="fas fa-user-circle fa-9x"></i>
+        </span>
 
         <form id="login-form" onSubmit="login();return false" method="POST">
             <!-- Form Fields -->
@@ -39,11 +41,11 @@
             <p id="error-tag" ></p>
             <!-- Buttons -->
             <div class="btn">
-                <button id="logbtn" type="submit" class="btn btn-outline-secondary">
+                <button id="logbtn" type="submit" class="btn btn-outline-light">
                     Login
                 </button>
                 
-                <button id="signbtn" type="button" class="btn btn-outline-secondary">
+                <button id="signbtn" type="button" class="btn btn-outline-light">
                     <a class="links" href="signup.html">Sign up</a>
                 </button>
             </div>
