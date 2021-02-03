@@ -25,10 +25,12 @@
         <form id="signup-form" onsubmit="signup()" method="POST">-->
         <form id="signup-form" onsubmit="signup(); return false">
             <div class="input-group mb-3">
-                <input type="text" name="firstName" class="form-control" placeholder="First name" aria-label="First name">
-            </div>
-            <div class="input-group mb-3">
-                <input type="text" name="lastName" class="form-control" placeholder="Last name" aria-label="Last name">
+                <div class="colleft">
+                    <input type="text" name="firstName" class="form-control" placeholder="First name" aria-label="First name">
+                </div>
+                <div class="colright">
+                    <input type="text" name="lastName" class="form-control" placeholder="Last name" aria-label="Last name">
+                </div>
             </div>
 
             <div class="input-group mb-3">
