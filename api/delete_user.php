@@ -23,7 +23,7 @@
     else
     {
         // There was a problem with the deletion.
-        sendResultInfo($stmt->error)
+        sendResultInfo($stmt->error);
     }
 
     // Parse request info and return a PHP Object.
