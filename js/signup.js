@@ -6,7 +6,7 @@ function signup()
     const pw_confirm = signup_form.pw_confirm.value;
     const firstName = signup_form.firstName.value;
     const lastName = signup_form.lastName.value;
-    const url = "http://68.183.59.220/api/adduser.php";
+    const url = "http://68.183.59.220/api/add_user.php";
     const signup_obj = {
         'firstName':firstName,
         'lastName':lastName,
