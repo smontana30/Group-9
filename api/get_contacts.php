@@ -32,6 +32,8 @@
         $rows[] = $r;
     }
 
+    $rows = array_slice($rows, $_GET['offset'] ?? 0, $_GET['length'] ?? 0);
+
     // Send the array as a JSON Object.
     returnWithInfo($rows);
 
