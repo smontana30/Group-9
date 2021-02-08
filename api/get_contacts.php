@@ -32,7 +32,7 @@
         $rows[] = $r;
     }
 
-    $rows = array_slice($rows, $_GET['offset'] ?? 0, $_GET['length'] ?? 0);
+    $rows = array_slice($rows, $_GET['offset'] ?? 0, $_GET['length'] ?? count($rows));
 
     // Send the array as a JSON Object.
     returnWithInfo($rows);
