@@ -4,9 +4,10 @@
     $inData = getRequestInfo();
 
     // Check if the request received is valid.
-    if (!isset($inData['ID']) && !isset($inData['UserID']));
+    if (!isset($inData['ID']) or !isset($inData['UserID']))
     {
         sendResultInfo('Invalid delete_contact JSON.');
+        return;
     }
 
     // Delete the contacts given the ID, making sure that UserID is associated

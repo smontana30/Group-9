@@ -8,7 +8,7 @@
     $lastName = '';
 
     // Check if the request received is valid.
-    if (!isset($inData['login']) && !isset($inData['password']))
+    if (!isset($inData['login']) or !isset($inData['password']))
     {
         returnWithError('Invalid login JSON.');
         return;

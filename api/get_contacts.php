@@ -7,6 +7,7 @@
     if (!isset($inData['UserID']))
     {
         returnWithError('Invalid get_contacts JSON.');
+        return;
     }
 
     // Select the contacts from the Contacts table with the logged-in UserID.

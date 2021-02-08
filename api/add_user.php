@@ -4,8 +4,8 @@
     $inData = getRequestInfo();
 
     // Check if the request received is valid.
-    if (!isset($inData['firstName']) && !isset($inData['lastName']) 
-        && !isset($inData['login']) && !isset($inData['password']))
+    if (!isset($inData['firstName']) or !isset($inData['lastName']) 
+        or !isset($inData['login']) or !isset($inData['password']))
     {
         sendResultInfo('Invalid add_user JSON.');
         return;

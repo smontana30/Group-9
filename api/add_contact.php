@@ -4,8 +4,8 @@
     $inData = getRequestInfo();
 
     // Check if the request received is valid.
-    if (!isset($inData['FirstName']) && !isset($inData['LastName']) 
-        && !isset($inData['Phone']) && !isset($inData['UserID']))
+    if (!isset($inData['FirstName']) or !isset($inData['LastName']) 
+        or !isset($inData['Phone']) or !isset($inData['UserID']))
     {
         sendResultInfo('Invalid add_contact JSON.');
         return;
