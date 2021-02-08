@@ -6,7 +6,7 @@
     // Check if the request received is valid.
     if (!isset($inData['ID']) && !isset($inData['UserID']));
     {
-        sendResultInfo('Invalid add_user JSON.');
+        sendResultInfo('Invalid delete_contact JSON.');
     }
 
     // Delete the contacts given the ID, making sure that UserID is associated
