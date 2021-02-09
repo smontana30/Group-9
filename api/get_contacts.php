@@ -32,6 +32,7 @@
         $rows[] = $r;
     }
 
+    // Slice all the contacts given the optional parameters.
     $rows = array_slice($rows, $_GET['offset'] ?? 0, $_GET['length'] ?? count($rows));
 
     // Send the array as a JSON Object.

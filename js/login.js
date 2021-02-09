@@ -36,6 +36,7 @@ function login()
 
         firstName = response.firstName;
         lastName = response.lastName;
+        userId = response.id;
         saveCookie();
         window.location.href = "index.html";
     }
@@ -83,9 +84,10 @@ function readCookie()
         else if (token[0] == "userId")
             userId = parseInt(token[1].trim());
         
-        if (userId < 0)
-            window.location.href = "login.html";
-        else
-            document.getElementById("error-tag").innerHTML = "Logged in as " + firstName + " " + lastName;
     }
+    
+    if (userId < 0)
+        window.location.href = "login.html";
+    else
+        document.getElementById("error-tag").innerHTML = "Logged in as " + firstName + " " + lastName;
 }

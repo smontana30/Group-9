@@ -1,7 +1,5 @@
 // You can specify which plugins you need
 
-
-
 function createContact() {
     
     // // getting out list element
@@ -148,10 +146,10 @@ function updateCard() {
 
 async function getContacts() {
     let contacts;
-    let userid = document.cookie;
+    let userid = getUserID();
     console.log("User id: ", userid);
     
-    await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
+    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid)
     .then(response => response.json())
     .then(results => {contacts = results})
     .catch(error => {console.log("Oh no, Error")});
@@ -206,7 +204,6 @@ async function makeContacts(contacts) {
     await console.log(contacts)
     // creating list item and giving it bootstrap class
    
-   
     contacts.results.forEach(el => {
         console.log(el);
 
@@ -223,7 +220,7 @@ async function makeContacts(contacts) {
         cardText.setAttribute('class', 'card-text');
 
          // getting our inputs
-        let fName = el.name;
+        let fName = el.FirstName;
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
@@ -314,5 +311,24 @@ function searchApi() {
 
 }
 
-const li = document.getElementsByClassName("id")
+function getUserID()
+{
+    var userId = -1;
+    const data = document.cookie;
+    const splits = data.split(",");
 
+    for (var i = 0; i < splits.length; i++)
+    {
+        const s = splits[i].trim();
+        const token = s.split("=");
+
+        if (token[0] == "userId")
+            userId = parseInt(token[1].trim());
+    }
+
+    if (userId < 0)
+        window.location.href = "login.html";
+    return userId;
+}
+
+const li = document.getElementsByClassName("id")
