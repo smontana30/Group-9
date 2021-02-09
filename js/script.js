@@ -85,6 +85,67 @@ function createContact() {
 
 }
 
+function updateCard() {
+    // // getting out list element
+    let div = document.getElementById('card');
+
+    // // creating list item and giving it bootstrap class
+    // let listEl = document.createElement("li");
+    // let aref = document.createElement('a');
+    // listEl.classList.add("list-group-item");
+
+
+    // // getting our inputs
+    let firstName = document.getElementById('firstName').value;
+    let lastName = document.getElementById('lastName').value;
+    let phoneNum = document.getElementById('phone-number').value;
+
+    let divBody = document.createElement("div");
+    divBody.setAttribute('class', "card-body");
+
+    // let cardimg = document.createElement('img');
+    // cardimg.setAttribute('class', 'card-img-top');
+
+    let cardTitle = document.createElement('h5');
+    cardTitle.setAttribute('class', "card-title");
+
+    let cardText = document.createElement('h6');
+    cardText.setAttribute('class', 'card-text');
+
+    // adding our input our list item  
+    cardTitle.appendChild(document.createTextNode(firstName + " " + lastName));
+    cardText.appendChild(document.createTextNode(phoneNum));
+    let updateBtn = document.createElement('button');
+    updateBtn.textContent = "Update";
+    updateBtn.setAttribute('class', "btn btn-secondary");
+    updateBtn.setAttribute('data-bs-toggle', "modal");
+    updateBtn.setAttribute('data-bs-target', "#myModal2");
+
+    let deleteBtn = document.createElement('button');
+    deleteBtn.textContent = "Delete";
+    deleteBtn.setAttribute('class', "btn btn-secondary");
+    
+    let cardDiv = document.createElement("div");
+    cardDiv.setAttribute('class', "card");
+    cardDiv.style.width = '14rem';
+    cardDiv.style.height = '10rem';
+
+    divBody.appendChild(cardTitle);
+    divBody.appendChild(cardText);
+    divBody.appendChild(updateBtn);
+    divBody.appendChild(deleteBtn);
+
+    // adding our list item to our list
+    // cardDiv.appendChild(cardimg);
+    cardDiv.appendChild(divBody);
+    div.appendChild(cardDiv);
+
+    // // resetting inputs
+    document.getElementById('firstName').value = "";
+    document.getElementById('lastName').value = "";
+    document.getElementById('phone-number').value = "";
+}
+
 async function getContacts() {
     let contacts;
     let userid = document.cookie;
@@ -164,10 +225,10 @@ async function makeContacts(contacts) {
          // getting our inputs
         let fName = el.name;
         // attempting to add image but it wasn't working and i got frustated 
-        // let firLetter = fName.toLowerCase().charAt(0);
+        let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
         // console.log(src);
-        cardimg.src = "../assets/images/letter/png/s.png";
+        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
         // cardimg.style.backgroundImage = "url('../images/letters/png/ " + firLetter +".png')";
         // cardimg.alt = 'Nothing'
         let lName = el.LastName;
@@ -180,25 +241,43 @@ async function makeContacts(contacts) {
         
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
         cardText.appendChild(document.createTextNode(number));
-        let updateBtn = document.createElement('button');
-        updateBtn.textContent = "Update";
-        updateBtn.setAttribute('class', "btn btn-secondary");
-        updateBtn.setAttribute('data-bs-toggle', "modal");
-        updateBtn.setAttribute('data-bs-target', "#myModal2");
 
-        let deleteBtn = document.createElement('button');
-        deleteBtn.textContent = "Delete";
-        deleteBtn.setAttribute('class', "btn btn-secondary");
+
+        // let updateBtn = document.createElement('button');
+        // updateBtn.textContent = "Update";
+        // updateBtn.setAttribute('class', "btn btn-secondary");
+        // updateBtn.setAttribute('data-bs-toggle', "modal");
+        // updateBtn.setAttribute('data-bs-target', "#myModal2");
+
+        // let deleteBtn = document.createElement('button');
+        // deleteBtn.textContent = "Delete";
+        // deleteBtn.setAttribute('class', "btn btn-secondary");
         
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
         // cardDiv.style.width = '14rem';
         // cardDiv.style.height = '10rem';
 
+        cardDiv.addEventListener('click', function() {
+            this.setAttribute('data-bs-toggle', 'modal');
+            this.setAttribute('data-bs-target', '#myModal3');
+            let modal = document.getElementById('modal3');
+            let modalname = document.getElementById('fullName');
+            let modalphone = document.getElementById('phNumber');
+            modalname.textContent = "Name: " + fName + " " + lName;
+            modalphone.innerText = "Phone: " + number;
+            let updateBtn = document.getElementById('modal3button');
+            updateBtn.setAttribute('data-bs-toggle', "modal");
+            updateBtn.setAttribute('data-bs-target', "#myModal2");
+            // here will an event listner for click and send data to update card
+            // will probaby send first and last name and phone number to update to search for 
+            // card to update. then use flag to let us know if we need to update the card.
+        })
+
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
-        divBody.appendChild(updateBtn);
-        divBody.appendChild(deleteBtn);
+        // divBody.appendChild(updateBtn);
+        // divBody.appendChild(deleteBtn);
 
         // adding our list item to our list
         cardDiv.appendChild(cardimg);
@@ -212,18 +291,20 @@ function search() {
     let filter = searchBar.value.toLowerCase();
     let card = document.getElementById("card");
     let cardBody = document.getElementsByClassName("card");
-    console.log(card)
+
+    // loop throught each of our contact cards to see which to keep/remove
     for (let i = 0; i < cardBody.length; i++) {
         console.log(cardBody[i]);
         let cardTitle = cardBody[i].getElementsByClassName('card-title')[0];
         let textContent = cardTitle.textContent;
         console.log(textContent);
         if (textContent.toLowerCase().indexOf(filter) > -1) {
+            // for filter out things if we can't find it, we get -1 as our val
+            // we have a val greater then that we know it there
             cardBody[i].style.display = "";
         }
         else {
-            console.log("remove");
-            console.log(card)
+            // if we are here we know that card is not included in filter so hide it
             cardBody[i].style.display = "none";
         }
     }

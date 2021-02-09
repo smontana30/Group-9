@@ -25,14 +25,23 @@ body {
 }
 
 .card {
+    align-items: center;
+    border-radius: 10px;
     margin: 10px;
+    width: 16rem;
+}
+
+.card-img-top {
+    height: 150px;
+    margin: 10px;
+    width: 200px;
 }
 
 #card {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
 
 .card-title {

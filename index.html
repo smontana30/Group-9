@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >
+                            <button onclick="updateCard()" type="button" class="btn btn-secondary" data-bs-dismiss="modal" >
                                 Update
                             </button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -99,20 +99,19 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            Add Contacts
+                            <h2>Add Contacts</h2>
                         </div>
-                        <div class="modal-body">
+                        <div id="modal3" class="modal-body">
                             <div class="input-group mb-3">
-                                <span id="fName"></span>
-                                <span id="LName"></span>
+                                <h3 id="fullName"></h3>
                             </div>
                             
                             <div class="input-group mb-3">
-                                <span id="phNumber"></span>
+                                <h4 id="phNumber"></h4>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >
+                            <button  class="btn btn-secondary" id="modal3button" type="button" data-bs-dismiss="modal">
                                 Update
                             </button>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
