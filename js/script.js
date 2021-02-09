@@ -1,24 +1,38 @@
 // You can specify which plugins you need
 
+
+
 function createContact() {
     
-    // getting out list element
-    let ulEl = document.getElementById('contact-list');
+    // // getting out list element
+    let div = document.getElementById('card');
 
-    // creating list item and giving it bootstrap class
-    let listEl = document.createElement("li");
-    let aref = document.createElement('a');
-    listEl.classList.add("list-group-item");
+    // // creating list item and giving it bootstrap class
+    // let listEl = document.createElement("li");
+    // let aref = document.createElement('a');
+    // listEl.classList.add("list-group-item");
 
 
-    // getting our inputs
+    // // getting our inputs
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
     let phoneNum = document.getElementById('phone-number').value;
 
-    // adding our input t our list item
-    
-    listEl.appendChild(document.createTextNode(firstName + " " + lastName + ": " + phoneNum));
+    let divBody = document.createElement("div");
+    divBody.setAttribute('class', "card-body");
+
+    // let cardimg = document.createElement('img');
+    // cardimg.setAttribute('class', 'card-img-top');
+
+    let cardTitle = document.createElement('h5');
+    cardTitle.setAttribute('class', "card-title");
+
+    let cardText = document.createElement('h6');
+    cardText.setAttribute('class', 'card-text');
+
+    // adding our input our list item  
+    cardTitle.appendChild(document.createTextNode(firstName + " " + lastName));
+    cardText.appendChild(document.createTextNode(phoneNum));
     let updateBtn = document.createElement('button');
     updateBtn.textContent = "Update";
     updateBtn.setAttribute('class', "btn btn-secondary");
@@ -28,24 +42,54 @@ function createContact() {
     let deleteBtn = document.createElement('button');
     deleteBtn.textContent = "Delete";
     deleteBtn.setAttribute('class', "btn btn-secondary");
+    
+    let cardDiv = document.createElement("div");
+    cardDiv.setAttribute('class', "card");
+    cardDiv.style.width = '14rem';
+    cardDiv.style.height = '10rem';
 
-    // resetting inputs
+    divBody.appendChild(cardTitle);
+    divBody.appendChild(cardText);
+    divBody.appendChild(updateBtn);
+    divBody.appendChild(deleteBtn);
+
+    // adding our list item to our list
+    // cardDiv.appendChild(cardimg);
+    cardDiv.appendChild(divBody);
+    div.appendChild(cardDiv);
+
+    // // adding our input t our list item
+    
+    // listEl.appendChild(document.createTextNode(firstName + " " + lastName + ": " + phoneNum));
+    // let updateBtn = document.createElement('button');
+    // updateBtn.textContent = "Update";
+    // updateBtn.setAttribute('class', "btn btn-secondary");
+    // updateBtn.setAttribute('data-bs-toggle', "modal");
+    // updateBtn.setAttribute('data-bs-target', "#myModal2");
+
+    // let deleteBtn = document.createElement('button');
+    // deleteBtn.textContent = "Delete";
+    // deleteBtn.setAttribute('class', "btn btn-secondary");
+
+    // // resetting inputs
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
 
-    listEl.appendChild(updateBtn);
-    listEl.appendChild(deleteBtn);
+    // listEl.appendChild(updateBtn);
+    // listEl.appendChild(deleteBtn);
 
-    // adding our list item to our list
-    ulEl.appendChild(listEl);
+    // // adding our list item to our list
+    // ulEl.appendChild(listEl);
 
 
 }
 
 async function getContacts() {
     let contacts;
-
+    let userid = document.cookie;
+    console.log("User id: ", userid);
+    
     await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
     .then(response => response.json())
     .then(results => {contacts = results})
@@ -119,14 +163,23 @@ async function makeContacts(contacts) {
 
          // getting our inputs
         let fName = el.name;
-        cardimg.alt = 'Nothing'
-        // let lName = document.getElementById('lastName').value;
-        // let number = document.getElementById('phone-number').value;
-
-        // adding our input t our list item
+        // attempting to add image but it wasn't working and i got frustated 
+        // let firLetter = fName.toLowerCase().charAt(0);
+        // let src = "/letters/png/" + firLetter + ".png";
+        // console.log(src);
+        cardimg.src = "../assets/images/letter/png/s.png";
+        // cardimg.style.backgroundImage = "url('../images/letters/png/ " + firLetter +".png')";
+        // cardimg.alt = 'Nothing'
+        let lName = el.LastName;
+        let number = el.Phone;
+        if (lName == undefined || number == undefined) {
+            lName = "test";
+            number = "123456789";
+        }
+        // adding our input our list item
         
-        cardTitle.appendChild(document.createTextNode(fName));
-        cardText.appendChild(document.createTextNode("random number :)"));
+        cardTitle.appendChild(document.createTextNode(fName + " " + lName));
+        cardText.appendChild(document.createTextNode(number));
         let updateBtn = document.createElement('button');
         updateBtn.textContent = "Update";
         updateBtn.setAttribute('class', "btn btn-secondary");
@@ -139,7 +192,8 @@ async function makeContacts(contacts) {
         
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
-        cardDiv.style.width = '16rem';
+        // cardDiv.style.width = '14rem';
+        // cardDiv.style.height = '10rem';
 
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
@@ -153,6 +207,31 @@ async function makeContacts(contacts) {
     });
 }
 
+function search() {
+    let searchBar = document.getElementById("search");
+    let filter = searchBar.value.toLowerCase();
+    let card = document.getElementById("card");
+    let cardBody = document.getElementsByClassName("card");
+    console.log(card)
+    for (let i = 0; i < cardBody.length; i++) {
+        console.log(cardBody[i]);
+        let cardTitle = cardBody[i].getElementsByClassName('card-title')[0];
+        let textContent = cardTitle.textContent;
+        console.log(textContent);
+        if (textContent.toLowerCase().indexOf(filter) > -1) {
+            cardBody[i].style.display = "";
+        }
+        else {
+            console.log("remove");
+            console.log(card)
+            cardBody[i].style.display = "none";
+        }
+    }
+}
+
+function searchApi() {
+
+}
 
 const li = document.getElementsByClassName("id")
 

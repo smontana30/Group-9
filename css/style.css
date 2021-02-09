@@ -25,15 +25,28 @@ body {
 }
 
 .card {
-    margin: 5px;
+    margin: 10px;
 }
 
 #card {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    
+    justify-content: space-between; 
+}
+
+.card-title {
+    align-items: center;
+    font-size: 24px;
+}
+
+.card-text {
+    align-items: center;
+    font-size: 18px;
+}
+
+#card button {
+    margin: 5px;
 }
 
 /* 

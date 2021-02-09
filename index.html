@@ -22,8 +22,8 @@
         <br>
         <div class="contacts">
             <div class="input-group mb-3">
-                <input placeholder="Search" id="search" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                <button type="button" class="btn btn-secondary">Search</button>
+                <input placeholder="Search" onkeyup="search()" id="search" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                <button type="button" class="btn btn-secondary" onclick="searchApi()">Search</button>
                 <button type="button" class="btn btn-secondary" 
                 data-bs-toggle="modal" data-bs-target="#myModal"
                 id="addbtn">Add Contact</button>    
