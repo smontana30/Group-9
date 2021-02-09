@@ -1,4 +1,3 @@
-
 body {
     align-items: center;
     background-image: url("../images/blurreddark.jpg");
@@ -21,7 +20,6 @@ body {
 
 .contacts {
     display: grid;
-    
 }
 
 .card {
@@ -58,6 +56,7 @@ body {
     margin: 5px;
 }
 
+
 /* 
 #contact-list {
     display: flex;
@@ -73,4 +72,5 @@ body {
     justify-content: flex-end;
     float: right;
     margin: 5px;
-} */
+} 
+*/

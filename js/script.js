@@ -5,12 +5,6 @@ function createContact() {
     // // getting out list element
     let div = document.getElementById('card');
 
-    // // creating list item and giving it bootstrap class
-    // let listEl = document.createElement("li");
-    // let aref = document.createElement('a');
-    // listEl.classList.add("list-group-item");
-
-
     // // getting our inputs
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
@@ -18,20 +12,26 @@ function createContact() {
     let phoneNum = document.getElementById('phone-number').value;
     let userId = getUserID()
 
-    let payload = JSON.stringify({'FirstName': firstName, 'LastName': lastName,
-        'Phone': phoneNum, 'UserID': userId});
-    let url = "http://68.183.59.220/api/add_contact.php";
-    let xhr = new XMLHttpRequest();
-    console.log("sending " + payload + " to get_contacts.php");
-    xhr.open("POST", url, false);
-    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-    xhr.send(payload);
+    // let payload = JSON.stringify({
+    //     'FirstName': firstName,
+    //     'LastName': lastName,
+    //     'Phone': phoneNum,
+    //     'UserID': userId
+    // });
+    // let url = "http://68.183.59.220/api/add_contact.php";
+    // let xhr = new XMLHttpRequest();
+    // console.log("sending " + payload + " to get_contacts.php");
+    // xhr.open("POST", url, false);
+    // xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+    // xhr.send(payload);
+
+    // add try catch
 
     let divBody = document.createElement("div");
     divBody.setAttribute('class', "card-body");
 
-    // let cardimg = document.createElement('img');
-    // cardimg.setAttribute('class', 'card-img-top');
+    let cardimg = document.createElement('img');
+    cardimg.setAttribute('class', 'card-img-top');
 
     let cardTitle = document.createElement('h5');
     cardTitle.setAttribute('class', "card-title");
@@ -39,9 +39,17 @@ function createContact() {
     let cardText = document.createElement('h6');
     cardText.setAttribute('class', 'card-text');
 
+    let firLetter = firstName.toLowerCase().charAt(0);
+    // let src = "/letters/png/" + firLetter + ".png";
+    // console.log(src);
+    cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
+    // cardimg.style.backgroundImage = "url('../images/letters/png/ " + firLetter +".png')";
+
     // adding our input our list item  
     cardTitle.appendChild(document.createTextNode(firstName + " " + lastName));
     cardText.appendChild(document.createTextNode(phoneNum));
+
+
     let updateBtn = document.createElement('button');
     updateBtn.textContent = "Update";
     updateBtn.setAttribute('class', "btn btn-secondary");
@@ -54,31 +62,33 @@ function createContact() {
 
     let cardDiv = document.createElement("div");
     cardDiv.setAttribute('class', "card");
-    cardDiv.style.width = '14rem';
-    cardDiv.style.height = '10rem';
+    cardDiv.addEventListener('click', function() {
+        this.setAttribute('data-bs-toggle', 'modal');
+        this.setAttribute('data-bs-target', '#myModal3');
+        let modal = document.getElementById('modal3');
+        let modalname = document.getElementById('fullName');
+        let modalphone = document.getElementById('phNumber');
+        modalname.textContent = "Name: " + firstName + " " + lastName;
+        modalphone.innerText = "Phone: " + phoneNum;
+        let updateBtn = document.getElementById('modal3button');
+        updateBtn.setAttribute('data-bs-toggle', "modal");
+        updateBtn.setAttribute('data-bs-target', "#myModal2");
+        // here will an event listner for click and send data to update card
+        // will probaby send first and last name and phone number to update to search for 
+        // card to update. then use flag to let us know if we need to update the card.
+
+    });
 
     divBody.appendChild(cardTitle);
     divBody.appendChild(cardText);
-    divBody.appendChild(updateBtn);
-    divBody.appendChild(deleteBtn);
+
+    // divBody.appendChild(updateBtn);
+    // divBody.appendChild(deleteBtn);
 
     // adding our list item to our list
-    // cardDiv.appendChild(cardimg);
+    cardDiv.appendChild(cardimg);
     cardDiv.appendChild(divBody);
     div.appendChild(cardDiv);
-
-    // // adding our input t our list item
-
-    // listEl.appendChild(document.createTextNode(firstName + " " + lastName + ": " + phoneNum));
-    // let updateBtn = document.createElement('button');
-    // updateBtn.textContent = "Update";
-    // updateBtn.setAttribute('class', "btn btn-secondary");
-    // updateBtn.setAttribute('data-bs-toggle', "modal");
-    // updateBtn.setAttribute('data-bs-target', "#myModal2");
-
-    // let deleteBtn = document.createElement('button');
-    // deleteBtn.textContent = "Delete";
-    // deleteBtn.setAttribute('class', "btn btn-secondary");
 
     // // resetting inputs
     document.getElementById('firstName').value = "";
@@ -170,51 +180,11 @@ async function getContacts() {
     await makeContacts(contacts)
 }
 
-// async function makeContacts(contacts) {
-//     // getting out list element
-//     let ulEl = document.getElementById('contact-list');
-
-//     await console.log(contacts)
-//     // creating list item and giving it bootstrap class
-
-
-//     contacts.results.forEach(el => {
-//         console.log(el);
-
-//         let listEl = document.createElement("li");
-//         let aref = document.createElement('a');
-//         listEl.classList.add("list-group-item");
-
-//          // getting our inputs
-//         let fName = el.name;
-//         // let lName = document.getElementById('lastName').value;
-//         // let number = document.getElementById('phone-number').value;
-
-//         // adding our input t our list item
-
-//         listEl.appendChild(document.createTextNode(fName));
-//         let updateBtn = document.createElement('button');
-//         updateBtn.textContent = "Update";
-//         updateBtn.setAttribute('class', "btn btn-secondary");
-//         updateBtn.setAttribute('data-bs-toggle', "modal");
-//         updateBtn.setAttribute('data-bs-target', "#myModal2");
-
-//         let deleteBtn = document.createElement('button');
-//         deleteBtn.textContent = "Delete";
-//         deleteBtn.setAttribute('class', "btn btn-secondary");
-
-//         listEl.appendChild(updateBtn);
-//         listEl.appendChild(deleteBtn);
-
-//         // adding our list item to our list
-//         ulEl.appendChild(listEl);
-//     });
-// }
 async function makeContacts(contacts) {
     // getting out list element
     let div = document.getElementById('card');
 
-    await console.log(contacts)
+    console.log(contacts)
         // creating list item and giving it bootstrap class
     let flag = 0;
 
@@ -329,6 +299,7 @@ function search() {
 // search the user contacts for given strings
 function searchApi() {
     // used the search string given "unown" 
+
 }
 
 function getUserID() {
