@@ -1,7 +1,7 @@
 // You can specify which plugins you need
 
 function createContact() {
-    
+
     // // getting out list element
     let div = document.getElementById('card');
 
@@ -40,7 +40,7 @@ function createContact() {
     let deleteBtn = document.createElement('button');
     deleteBtn.textContent = "Delete";
     deleteBtn.setAttribute('class', "btn btn-secondary");
-    
+
     let cardDiv = document.createElement("div");
     cardDiv.setAttribute('class', "card");
     cardDiv.style.width = '14rem';
@@ -57,7 +57,7 @@ function createContact() {
     div.appendChild(cardDiv);
 
     // // adding our input t our list item
-    
+
     // listEl.appendChild(document.createTextNode(firstName + " " + lastName + ": " + phoneNum));
     // let updateBtn = document.createElement('button');
     // updateBtn.textContent = "Update";
@@ -122,7 +122,7 @@ function updateCard() {
     let deleteBtn = document.createElement('button');
     deleteBtn.textContent = "Delete";
     deleteBtn.setAttribute('class', "btn btn-secondary");
-    
+
     let cardDiv = document.createElement("div");
     cardDiv.setAttribute('class', "card");
     cardDiv.style.width = '14rem';
@@ -148,11 +148,13 @@ async function getContacts() {
     let contacts;
     let userid = getUserID();
     console.log("User id: ", userid);
-    
-    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid)
-    .then(response => response.json())
-    .then(results => {contacts = results})
-    .catch(error => {console.log("Oh no, Error")});
+
+    // group api query
+    // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
+    await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
+        .then(response => response.json())
+        .then(results => { contacts = results })
+        .catch(error => { console.log("Oh no, Error") });
 
     await makeContacts(contacts)
 }
@@ -163,8 +165,8 @@ async function getContacts() {
 
 //     await console.log(contacts)
 //     // creating list item and giving it bootstrap class
-   
-   
+
+
 //     contacts.results.forEach(el => {
 //         console.log(el);
 
@@ -178,7 +180,7 @@ async function getContacts() {
 //         // let number = document.getElementById('phone-number').value;
 
 //         // adding our input t our list item
-        
+
 //         listEl.appendChild(document.createTextNode(fName));
 //         let updateBtn = document.createElement('button');
 //         updateBtn.textContent = "Update";
@@ -202,10 +204,13 @@ async function makeContacts(contacts) {
     let div = document.getElementById('card');
 
     await console.log(contacts)
-    // creating list item and giving it bootstrap class
-   
+        // creating list item and giving it bootstrap class
+    let flag = 0;
+
     contacts.results.forEach(el => {
         console.log(el);
+        if (flag == 12)
+            return;
 
         let divBody = document.createElement("div");
         divBody.setAttribute('class', "card-body");
@@ -219,8 +224,9 @@ async function makeContacts(contacts) {
         let cardText = document.createElement('h6');
         cardText.setAttribute('class', 'card-text');
 
-         // getting our inputs
-        let fName = el.FirstName;
+        // getting our inputs
+        // let fName = el.FirstName;
+        let fName = el.name;
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
@@ -235,7 +241,7 @@ async function makeContacts(contacts) {
             number = "123456789";
         }
         // adding our input our list item
-        
+
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
         cardText.appendChild(document.createTextNode(number));
 
@@ -249,7 +255,7 @@ async function makeContacts(contacts) {
         // let deleteBtn = document.createElement('button');
         // deleteBtn.textContent = "Delete";
         // deleteBtn.setAttribute('class', "btn btn-secondary");
-        
+
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
         // cardDiv.style.width = '14rem';
@@ -269,7 +275,8 @@ async function makeContacts(contacts) {
             // here will an event listner for click and send data to update card
             // will probaby send first and last name and phone number to update to search for 
             // card to update. then use flag to let us know if we need to update the card.
-        })
+
+        });
 
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
@@ -280,9 +287,11 @@ async function makeContacts(contacts) {
         cardDiv.appendChild(cardimg);
         cardDiv.appendChild(divBody);
         div.appendChild(cardDiv);
+        flag++;
     });
 }
 
+// searches only contacts on the screen
 function search() {
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
@@ -299,26 +308,24 @@ function search() {
             // for filter out things if we can't find it, we get -1 as our val
             // we have a val greater then that we know it there
             cardBody[i].style.display = "";
-        }
-        else {
+        } else {
             // if we are here we know that card is not included in filter so hide it
             cardBody[i].style.display = "none";
         }
     }
 }
 
+// search the user contacts for given strings
 function searchApi() {
-
+    // used the search string given "unown" 
 }
 
-function getUserID()
-{
+function getUserID() {
     var userId = -1;
     const data = document.cookie;
     const splits = data.split(",");
 
-    for (var i = 0; i < splits.length; i++)
-    {
+    for (var i = 0; i < splits.length; i++) {
         const s = splits[i].trim();
         const token = s.split("=");
 
@@ -326,8 +333,8 @@ function getUserID()
             userId = parseInt(token[1].trim());
     }
 
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
     return userId;
 }
 
