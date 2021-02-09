@@ -27,10 +27,10 @@ function readCookie()
             lastName = token[1];
         else if (token[0] == "userId")
             userId = parseInt(token[1].trim());
-        
-        if (userId < 0)
-            window.location.href = "login.html";
-        else
-            document.getElementById("error-tag").innerHTML = "Logged in as " + firstName + " " + lastName;
     }
+
+    if (userId < 0)
+        window.location.href = "login.html";
+    else
+        document.getElementById("error-tag").innerHTML = "Logged in as " + firstName + " " + lastName;
 }
