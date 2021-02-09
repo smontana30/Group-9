@@ -14,7 +14,18 @@ function createContact() {
     // // getting our inputs
     let firstName = document.getElementById('firstName').value;
     let lastName = document.getElementById('lastName').value;
+    // Create a function to remove any non-digits from the phone number.
     let phoneNum = document.getElementById('phone-number').value;
+    let userId = getUserID()
+
+    let payload = JSON.stringify({'FirstName': firstName, 'LastName': lastName,
+        'Phone': phoneNum, 'UserID': userId});
+    let url = "http://68.183.59.220/api/add_contact.php";
+    let xhr = new XMLHttpRequest();
+    console.log("sending " + payload + " to get_contacts.php");
+    xhr.open("POST", url, false);
+    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+    xhr.send(payload);
 
     let divBody = document.createElement("div");
     divBody.setAttribute('class', "card-body");
