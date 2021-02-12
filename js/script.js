@@ -344,7 +344,7 @@ function search() {
 
 // }
 async function searchApi() {
-    let cards = document.getElementByClassName("card");
+    let cards = document.getElementsByClassName("card");
     let parentCard = document.getElementById("card");
     let searchBar = document.getElementById("search");
     let filter = searchBar.value;
