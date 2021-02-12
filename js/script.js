@@ -306,43 +306,61 @@ function search() {
 }
 
 // search the user contacts for given strings
-function searchApi() {
+// function searchApi() {
+//     let searchBar = document.getElementById("search");
+//     let filter = searchBar.value;
+//     let userId = getUserID();
+//     let payload = JSON.stringify({
+//         'UserID': userId,
+//         'query': filter,
+//         'offset': 0,
+//         'length': 30
+//     });
+//     let url = "http://68.183.59.220/api/get_contact.php";
+//     let xhr = new XMLHttpRequest();
+//     console.log("sending " + payload + " to get_contacts.php");
+//     xhr.open("POST", url, false);
+//     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+
+//     try
+//     {
+//         xhr.send(payload);
+//         let response = JSON.parse(xhr.responseText);
+//         if (response.error.localeCompare("") != 0)
+//         {
+//             document.getElementById("error-tag").innerHTML = response.error;
+//             console.log(response.error);
+//             return;
+//         }
+//         console.log("Need to make contacts now");
+        
+//     }
+//     catch (err)
+//     {
+//         // If we get here, there was likely an issue with the API.
+//         // document.getElementById("error-tag").innerHTML = err.message;
+//         console.error("Error:\n" + err);
+//     }
+
+// }
+async function searchApi() {
     let searchBar = document.getElementById("search");
     let filter = searchBar.value;
-    let userId = getUserID();
-    let payload = JSON.stringify({
-        'UserID': userId,
-        'query': filter,
-        'offset': 0,
-        'length': 30
-    });
-    let url = "http://68.183.59.220/api/get_contact.php";
-    let xhr = new XMLHttpRequest();
-    console.log("sending " + payload + " to get_contacts.php");
-    xhr.open("POST", url, false);
-    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+    let contacts;
+    let userid = getUserID();
+    console.log("User id: ", userid);
 
-    try
-    {
-        xhr.send(payload);
-        let response = JSON.parse(xhr.responseText);
-        if (response.error.localeCompare("") != 0)
-        {
-            document.getElementById("error-tag").innerHTML = response.error;
-            console.log(response.error);
-            return;
-        }
-        console.log("Need to make contacts now");
-        
-    }
-    catch (err)
-    {
-        // If we get here, there was likely an issue with the API.
-        document.getElementById("error-tag").innerHTML = err.message;
-        console.error("Error:\n" + err);
-    }
+    // group api query
+    // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
+    //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
+    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid + "&query=" + filter)
+        .then(response => response.json())
+        .then(results => { contacts = results })
+        .catch(error => { console.log("Oh no, Error") });
 
+    await makeContacts(contacts)
 }
+
 
 function getUserID() {
     var userId = -1;
