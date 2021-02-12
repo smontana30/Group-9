@@ -353,7 +353,7 @@ async function searchApi() {
     console.log("User id: ", userid);
 
     // parentCard.removeChild(cards);
-    cards.remove();
+    await cards.remove();
 
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
