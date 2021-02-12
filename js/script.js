@@ -215,8 +215,8 @@ async function makeContacts(contacts) {
         cardText.setAttribute('class', 'card-text');
 
         // getting our inputs
-        // let fName = el.FirstName;
-        let fName = el.name;
+        let fName = el.FirstName;
+        //let fName = el.name;
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
