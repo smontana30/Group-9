@@ -309,8 +309,9 @@ function search() {
 function searchApi() {
     let searchBar = document.getElementById("search");
     let filter = searchBar.value;
+    let userId = getUserID();
     let payload = JSON.stringify({
-        'UserID': 0,
+        'UserID': userId,
         'query': filter,
         'offset': 0,
         'length': 30
@@ -331,6 +332,7 @@ function searchApi() {
             console.log(response.error);
             return;
         }
+        console.log("Need to make contacts now");
         
     }
     catch (err)
