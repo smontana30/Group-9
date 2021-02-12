@@ -352,7 +352,8 @@ async function searchApi() {
     let userid = getUserID();
     console.log("User id: ", userid);
 
-    parentCard.removeChild(cards);
+    // parentCard.removeChild(cards);
+    cards.remove();
 
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
