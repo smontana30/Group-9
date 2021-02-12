@@ -12,18 +12,26 @@ function createContact() {
     let phoneNum = document.getElementById('phone-number').value;
     let userId = getUserID()
 
-    // let payload = JSON.stringify({
-    //     'FirstName': firstName,
-    //     'LastName': lastName,
-    //     'Phone': phoneNum,
-    //     'UserID': userId
-    // });
-    // let url = "http://68.183.59.220/api/add_contact.php";
-    // let xhr = new XMLHttpRequest();
-    // console.log("sending " + payload + " to get_contacts.php");
-    // xhr.open("POST", url, false);
-    // xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-    // xhr.send(payload);
+    let payload = JSON.stringify({
+        'FirstName': firstName,
+        'LastName': lastName,
+        'Phone': phoneNum,
+        'UserID': userId
+    });
+
+    let url = "http://68.183.59.220/api/add_contact.php";
+    let xhr = new XMLHttpRequest();
+    console.log("sending " + payload + " to get_contacts.php");
+    xhr.open("POST", url, false);
+    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+    try {
+        xhr.send(payload);
+    } catch (error) {
+        // If we get here, there was likely an issue with the API.
+        document.getElementById("error-tag").innerHTML = err.message;
+        console.error("Error:\n" + err)
+    }
+    
 
     // add try catch
 
@@ -172,7 +180,8 @@ async function getContacts() {
 
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
-    await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
+    //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
+    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid)
         .then(response => response.json())
         .then(results => { contacts = results })
         .catch(error => { console.log("Oh no, Error") });
@@ -298,7 +307,38 @@ function search() {
 
 // search the user contacts for given strings
 function searchApi() {
-    // used the search string given "unown" 
+    let searchBar = document.getElementById("search");
+    let filter = searchBar.value;
+    let payload = JSON.stringify({
+        'UserID': 0,
+        'query': filter,
+        'offset': 0,
+        'length': 30
+    });
+    let url = "http://68.183.59.220/api/get_contact.php";
+    let xhr = new XMLHttpRequest();
+    console.log("sending " + payload + " to get_contacts.php");
+    xhr.open("POST", url, false);
+    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+
+    try
+    {
+        xhr.send(payload);
+        let response = JSON.parse(xhr.responseText);
+        if (response.error.localeCompare("") != 0)
+        {
+            document.getElementById("error-tag").innerHTML = response.error;
+            console.log(response.error);
+            return;
+        }
+        
+    }
+    catch (err)
+    {
+        // If we get here, there was likely an issue with the API.
+        document.getElementById("error-tag").innerHTML = err.message;
+        console.error("Error:\n" + err);
+    }
 
 }
 
@@ -315,8 +355,8 @@ function getUserID() {
             userId = parseInt(token[1].trim());
     }
 
-    // if (userId < 0)
-    //     window.location.href = "login.html";
+    if (userId < 0)
+        window.location.href = "login.html";
     return userId;
 }
 
