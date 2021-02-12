@@ -62,6 +62,7 @@ function createContact() {
 
     let cardDiv = document.createElement("div");
     cardDiv.setAttribute('class', "card");
+    
     cardDiv.addEventListener('click', function() {
         this.setAttribute('data-bs-toggle', 'modal');
         this.setAttribute('data-bs-target', '#myModal3');
@@ -76,7 +77,23 @@ function createContact() {
         // here will an event listner for click and send data to update card
         // will probaby send first and last name and phone number to update to search for 
         // card to update. then use flag to let us know if we need to update the card.
-
+        deleteBtn.addEventListener('click', function() {
+            // let num = id.toString();
+            // console.log("id of card is: " + num);
+            // let card1 = document.getElementById('1');
+            // card1.remove();
+            let cards = document.getElementsByClassName("card");
+            console.log(cards.length);
+            // search for fname lname to know which card to delete
+            for (let i = 0; i < cards.length; i++) {
+                let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+                let textContent = cardTitle.textContent;
+                let str = fName + " " + lName;
+                if (textContent.match(str)) {
+                    cards[i].remove();
+                }
+            }
+        });
     });
 
     divBody.appendChild(cardTitle);
@@ -166,7 +183,38 @@ function updateCard() {
     cardDiv.appendChild(divBody);
     div.appendChild(cardDiv);
 
-    deleteBtn.addEventListener('click', deleteContact(cardDiv));
+    cardDiv.addEventListener('click', function() {
+        this.setAttribute('data-bs-toggle', 'modal');
+        this.setAttribute('data-bs-target', '#myModal3');
+        let modal = document.getElementById('modal3');
+        let modalname = document.getElementById('fullName');
+        let modalphone = document.getElementById('phNumber');
+        modalname.textContent = "Name: " + firstName + " " + lastName;
+        modalphone.innerText = "Phone: " + phoneNum;
+        let updateBtn = document.getElementById('modal3button');
+        updateBtn.setAttribute('data-bs-toggle', "modal");
+        updateBtn.setAttribute('data-bs-target', "#myModal2");
+        // here will an event listner for click and send data to update card
+        // will probaby send first and last name and phone number to update to search for 
+        // card to update. then use flag to let us know if we need to update the card.
+        deleteBtn.addEventListener('click', function() {
+            // let num = id.toString();
+            // console.log("id of card is: " + num);
+            // let card1 = document.getElementById('1');
+            // card1.remove();
+            let cards = document.getElementsByClassName("card");
+            console.log(cards.length);
+            // search for fname lname to know which card to delete
+            for (let i = 0; i < cards.length; i++) {
+                let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+                let textContent = cardTitle.textContent;
+                let str = fName + " " + lName;
+                if (textContent.match(str)) {
+                    cards[i].remove();
+                }
+            }
+        });
+    });
 
     // // resetting inputs
     document.getElementById('firstName').value = "";
