@@ -19,18 +19,18 @@ function createContact() {
         'UserID': userId
     });
 
-    let url = "http://68.183.59.220/api/add_contact.php";
-    let xhr = new XMLHttpRequest();
-    console.log("sending " + payload + " to get_contacts.php");
-    xhr.open("POST", url, false);
-    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-    try {
-        xhr.send(payload);
-    } catch (error) {
-        // If we get here, there was likely an issue with the API.
-        document.getElementById("error-tag").innerHTML = err.message;
-        console.error("Error:\n" + err)
-    }
+    // let url = "http://68.183.59.220/api/add_contact.php";
+    // let xhr = new XMLHttpRequest();
+    // console.log("sending " + payload + " to get_contacts.php");
+    // xhr.open("POST", url, false);
+    // xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+    // try {
+    //     xhr.send(payload);
+    // } catch (error) {
+    //     // If we get here, there was likely an issue with the API.
+    //     document.getElementById("error-tag").innerHTML = err.message;
+    //     console.error("Error:\n" + err)
+   //  }
     
 
     // add try catch
@@ -238,7 +238,7 @@ async function getContacts() {
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
     //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
-    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid)
+    await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
         .then(response => response.json())
         .then(results => { contacts = results })
         .catch(error => { console.log("Oh no, Error") });
@@ -273,8 +273,8 @@ async function makeContacts(contacts) {
         cardText.setAttribute('class', 'card-text');
 
         // getting our inputs
-        let fName = el.FirstName;
-        //let fName = el.name;
+        //let fName = el.FirstName;
+        let fName = el.name;
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
@@ -440,13 +440,13 @@ async function searchApi() {
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
     //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
-    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid + "&query=" + filter)
-        .then(response => response.json())
-        .then(results => { contacts = results })
-        .catch(error => { console.log("Oh no, Error") });
+//     await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid + "&query=" + filter)
+//         .then(response => response.json())
+//         .then(results => { contacts = results })
+//         .catch(error => { console.log("Oh no, Error") });
 
-    await makeContacts(contacts)
-}
+//     await makeContacts(contacts)
+ }
 
 
 function getUserID() {
@@ -462,9 +462,22 @@ function getUserID() {
             userId = parseInt(token[1].trim());
     }
 
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
     return userId;
+}
+
+function doLogout()
+{
+    deleteAllCookies();
+    window.location.href = "login.html";
+}
+
+function deleteAllCookies() 
+{
+    let firstName = "";
+    var cookies = document.cookie.split(",");
+    document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
 }
 
 const li = document.getElementsByClassName("id")
