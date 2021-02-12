@@ -344,11 +344,14 @@ function search() {
 
 // }
 async function searchApi() {
+    let cards = document.getElementsByClassName("card");
     let searchBar = document.getElementById("search");
     let filter = searchBar.value;
     let contacts;
     let userid = getUserID();
     console.log("User id: ", userid);
+
+    cards.remove();
 
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
