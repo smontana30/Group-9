@@ -89,6 +89,7 @@ function createContact() {
     cardDiv.appendChild(cardimg);
     cardDiv.appendChild(divBody);
     div.appendChild(cardDiv);
+    deleteBtn.addEventListener('click', deleteContact(cardDiv));
 
     // // resetting inputs
     document.getElementById('firstName').value = "";
@@ -101,7 +102,13 @@ function createContact() {
     // // adding our list item to our list
     // ulEl.appendChild(listEl);
 
+}
 
+function deleteContact(deleteCard) {
+
+    let parentDiv = document.getElementById('card');
+    parentDiv.removeChild(deleteCard);
+    
 }
 
 function updateCard() {
@@ -159,6 +166,8 @@ function updateCard() {
     cardDiv.appendChild(divBody);
     div.appendChild(cardDiv);
 
+    deleteBtn.addEventListener('click', deleteContact(cardDiv));
+
     // // resetting inputs
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
@@ -168,7 +177,7 @@ function updateCard() {
 async function getContacts() {
     let contacts;
     let userid = getUserID();
-    console.log("User id: ", userid);
+    //console.log("User id: ", userid);
 
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
@@ -184,12 +193,13 @@ async function makeContacts(contacts) {
     // getting out list element
     let div = document.getElementById('card');
 
-    console.log(contacts)
+    //console.log(contacts)
         // creating list item and giving it bootstrap class
     let flag = 0;
+    let id = 0;
 
     contacts.results.forEach(el => {
-        console.log(el);
+        //console.log(el);
         if (flag == 12)
             return;
 
@@ -239,6 +249,7 @@ async function makeContacts(contacts) {
 
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
+        cardDiv.setAttribute('id', id);
         // cardDiv.style.width = '14rem';
         // cardDiv.style.height = '10rem';
 
@@ -253,11 +264,30 @@ async function makeContacts(contacts) {
             let updateBtn = document.getElementById('modal3button');
             updateBtn.setAttribute('data-bs-toggle', "modal");
             updateBtn.setAttribute('data-bs-target', "#myModal2");
+            let deleteBtn = document.getElementById('modal3delete');
+            deleteBtn.addEventListener('click', function() {
+                // let num = id.toString();
+                // console.log("id of card is: " + num);
+                // let card1 = document.getElementById('1');
+                // card1.remove();
+                let cards = document.getElementsByClassName("card");
+                console.log(cards.length);
+                // search for fname lname to know which card to delete
+                for (let i = 0; i < cards.length; i++) {
+                    let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+                    let textContent = cardTitle.textContent;
+                    let str = fName + " " + lName;
+                    if (textContent.match(str)) {
+                        cards[i].remove();
+                    }
+                }
+            });
             // here will an event listner for click and send data to update card
             // will probaby send first and last name and phone number to update to search for 
             // card to update. then use flag to let us know if we need to update the card.
 
         });
+        
 
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
@@ -268,7 +298,11 @@ async function makeContacts(contacts) {
         cardDiv.appendChild(cardimg);
         cardDiv.appendChild(divBody);
         div.appendChild(cardDiv);
+        
+        //console.log(cardDiv);
+
         flag++;
+        id++;
     });
 }
 
@@ -281,10 +315,10 @@ function search() {
 
     // loop throught each of our contact cards to see which to keep/remove
     for (let i = 0; i < cardBody.length; i++) {
-        console.log(cardBody[i]);
+        //console.log(cardBody[i]);
         let cardTitle = cardBody[i].getElementsByClassName('card-title')[0];
         let textContent = cardTitle.textContent;
-        console.log(textContent);
+        //console.log(textContent);
         if (textContent.toLowerCase().indexOf(filter) > -1) {
             // for filter out things if we can't find it, we get -1 as our val
             // we have a val greater then that we know it there
