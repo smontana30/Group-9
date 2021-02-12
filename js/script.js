@@ -1,4 +1,5 @@
 // You can specify which plugins you need
+let id = 0;
 
 function createContact() {
 
@@ -19,18 +20,18 @@ function createContact() {
         'UserID': userId
     });
 
-    let url = "http://68.183.59.220/api/add_contact.php";
-    let xhr = new XMLHttpRequest();
-    console.log("sending " + payload + " to get_contacts.php");
-    xhr.open("POST", url, false);
-    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-    try {
-        xhr.send(payload);
-    } catch (error) {
-        // If we get here, there was likely an issue with the API.
-        document.getElementById("error-tag").innerHTML = err.message;
-        console.error("Error:\n" + err)
-    }
+    // let url = "http://68.183.59.220/api/add_contact.php";
+    // let xhr = new XMLHttpRequest();
+    // console.log("sending " + payload + " to get_contacts.php");
+    // xhr.open("POST", url, false);
+    // xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+    // try {
+    //     xhr.send(payload);
+    // } catch (error) {
+    //     // If we get here, there was likely an issue with the API.
+    //     document.getElementById("error-tag").innerHTML = err.message;
+    //     console.error("Error:\n" + err)
+    // }
     
 
     // add try catch
@@ -70,6 +71,7 @@ function createContact() {
 
     let cardDiv = document.createElement("div");
     cardDiv.setAttribute('class', "card");
+    cardDiv.setAttribute('id', id);
     
     cardDiv.addEventListener('click', function() {
         this.setAttribute('data-bs-toggle', 'modal');
@@ -85,9 +87,11 @@ function createContact() {
         // here will an event listner for click and send data to update card
         // will probaby send first and last name and phone number to update to search for 
         // card to update. then use flag to let us know if we need to update the card.
+        let deleteBtn = document.getElementById('modal3delete');
+
         deleteBtn.addEventListener('click', function() {
-            // let num = id.toString();
-            // console.log("id of card is: " + num);
+            let num = id.toString();
+            console.log("id of card is: " + num);
             // let card1 = document.getElementById('1');
             // card1.remove();
             let cards = document.getElementsByClassName("card");
@@ -96,12 +100,14 @@ function createContact() {
             for (let i = 0; i < cards.length; i++) {
                 let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                 let textContent = cardTitle.textContent;
-                let str = fName + " " + lName;
+                let str = firstName + " " + lastName;
                 if (textContent.match(str)) {
                     cards[i].remove();
                 }
             }
         });
+
+        id++;
     });
 
     divBody.appendChild(cardTitle);
@@ -114,7 +120,6 @@ function createContact() {
     cardDiv.appendChild(cardimg);
     cardDiv.appendChild(divBody);
     div.appendChild(cardDiv);
-    deleteBtn.addEventListener('click', deleteContact(cardDiv));
 
     // // resetting inputs
     document.getElementById('firstName').value = "";
@@ -205,6 +210,8 @@ function updateCard() {
         // here will an event listner for click and send data to update card
         // will probaby send first and last name and phone number to update to search for 
         // card to update. then use flag to let us know if we need to update the card.
+        let deleteBtn = document.getElementById('modal3delete');
+
         deleteBtn.addEventListener('click', function() {
             // let num = id.toString();
             // console.log("id of card is: " + num);
@@ -238,7 +245,7 @@ async function getContacts() {
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
     //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
-    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid)
+    await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
         .then(response => response.json())
         .then(results => { contacts = results })
         .catch(error => { console.log("Oh no, Error") });
@@ -253,7 +260,7 @@ async function makeContacts(contacts) {
     //console.log(contacts)
         // creating list item and giving it bootstrap class
     let flag = 0;
-    let id = 0;
+    
 
     contacts.results.forEach(el => {
         //console.log(el);
@@ -273,8 +280,8 @@ async function makeContacts(contacts) {
         cardText.setAttribute('class', 'card-text');
 
         // getting our inputs
-        let fName = el.FirstName;
-        //let fName = el.name;
+        // let fName = el.FirstName;
+        let fName = el.name;
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
@@ -321,6 +328,7 @@ async function makeContacts(contacts) {
             let updateBtn = document.getElementById('modal3button');
             updateBtn.setAttribute('data-bs-toggle', "modal");
             updateBtn.setAttribute('data-bs-target', "#myModal2");
+
             let deleteBtn = document.getElementById('modal3delete');
             deleteBtn.addEventListener('click', function() {
                 // let num = id.toString();
@@ -440,12 +448,13 @@ async function searchApi() {
     // group api query
     // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
     //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
-    await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid + "&query=" + filter)
-        .then(response => response.json())
-        .then(results => { contacts = results })
-        .catch(error => { console.log("Oh no, Error") });
 
-    await makeContacts(contacts)
+    // await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid + "&query=" + filter)
+    //     .then(response => response.json())
+    //     .then(results => { contacts = results })
+    //     .catch(error => { console.log("Oh no, Error") });
+
+    // await makeContacts(contacts)
 }
 
 
@@ -462,8 +471,8 @@ function getUserID() {
             userId = parseInt(token[1].trim());
     }
 
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
     return userId;
 }
 
