@@ -7,7 +7,6 @@ function login()
 {
     // TODO:
     // - Hash password before making query.
-    // - Make it so failed login attempts display in the form.
 
     const login_form = document.getElementById("login-form");
     const email = login_form.email.value;
@@ -15,13 +14,12 @@ function login()
     const url = "http://68.183.59.220/api/login.php";
     const payload = JSON.stringify({'login': email, 'password':password});
 
-    // Open an XMLHttpRequest to post a login.php request. 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, false);
-    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-
     try
     {
+        // Open an XMLHttpRequest to post a login.php request. 
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, false);
+        xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
         xhr.send(payload);
         const response = JSON.parse(xhr.responseText);
 
@@ -37,6 +35,7 @@ function login()
         firstName = response.firstName;
         lastName = response.lastName;
         userId = response.id;
+
         saveCookie();
         window.location.href = "index.html";
     }

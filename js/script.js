@@ -1,8 +1,9 @@
-// You can specify which plugins you need
+let offset = 0; // For selecting previous/next couple of contacts.
 let id = 0;
+const length = 12; // Number of contacts to show on the screen.
+const li = document.getElementsByClassName("id")
 
-function createContact() {
-
+function addContact() {
     // // getting out list element
     let div = document.getElementById('card');
 
@@ -11,30 +12,24 @@ function createContact() {
     let lastName = document.getElementById('lastName').value;
     // Create a function to remove any non-digits from the phone number.
     let phoneNum = document.getElementById('phone-number').value;
-    let userId = getUserID()
 
-    let payload = JSON.stringify({
-        'FirstName': firstName,
-        'LastName': lastName,
-        'Phone': phoneNum,
-        'UserID': userId
-    });
-
-    // let url = "http://68.183.59.220/api/add_contact.php";
-    // let xhr = new XMLHttpRequest();
-    // console.log("sending " + payload + " to get_contacts.php");
-    // xhr.open("POST", url, false);
-    // xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-    // try {
-    //     xhr.send(payload);
-    // } catch (error) {
-    //     // If we get here, there was likely an issue with the API.
-    //     document.getElementById("error-tag").innerHTML = err.message;
-    //     console.error("Error:\n" + err)
-    // }
-    
-
-    // add try catch
+    try {
+        let payload = JSON.stringify({
+            'FirstName': firstName,
+            'LastName': lastName,
+            'Phone': phoneNum,
+            'UserID': getUserID()
+        });
+        let url = "http://68.183.59.220/api/add_contact.php";
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, false);
+        xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+        xhr.send(payload);
+    } catch (error) {
+        // If we get here, there was likely an issue with the API.
+        // document.getElementById("error-tag").innerHTML = err.message;
+        console.error("Error:\n" + err)
+    }
 
     let divBody = document.createElement("div");
     divBody.setAttribute('class', "card-body");
@@ -135,7 +130,6 @@ function createContact() {
 }
 
 function deleteContact(deleteCard) {
-
     let parentDiv = document.getElementById('card');
     parentDiv.removeChild(deleteCard);
     
@@ -237,20 +231,64 @@ function updateCard() {
     document.getElementById('phone-number').value = "";
 }
 
+// Function called to send a POST request to the API and display contact cards
+// to the screen, omitting the query parameter.
 async function getContacts() {
-    let contacts;
-    let userid = getUserID();
-    //console.log("User id: ", userid);
+    const url_online = 'http://68.183.59.220/api/get_contacts.php';
 
-    // group api query
-    // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
-    //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
-    await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
+    // URL Parameters:
+    // - UserID: The unique ID of the currently logged in user, stored in a cookie.
+    // - length: The number of contacts to return.
+    // - offset: Number of contacts to skip in the array being returned.
+
+    const params = '?UserID=' + getUserID() + '&length=' + length + '&offset=' + offset;
+    fetchContactsWithUrl(url_online + params);
+}
+
+// Function called to send a POST request to the API and display contact cards
+// to the screen, including the query parameter.
+async function getContactsWithSearch() {
+    let cards = document.getElementsByClassName("card");
+    let parentCard = document.getElementById("card");
+    let searchBar = document.getElementById("search");
+    const url = 'http://68.183.59.220/api/get_contacts.php';
+
+    // URL Parameters:
+    // - UserID: The unique ID of the currently logged in user, stored in a cookie.
+    // - length: The number of contacts to return.
+    // - offset: Number of contacts to skip in the array being returned.
+    // - query : Search string applied to each individual column of the database.
+
+    const params = '?UserID=' + getUserID() + '&length=' + length + '&offset=' + offset + '&query=' + searchBar.value;
+
+    parentCard.removeChild(cards);
+    await cards.remove();
+
+    fetchContactsWithUrl(url + params);
+}
+
+// Helper function of both getContacts functions which makes the request. If
+// the request to the Group9 Website API fails, attempt the PokeAPI.
+async function fetchContactsWithUrl(url) {
+    let contacts = null;
+    const url_offline = 'https://pokeapi.co/api/v2/pokemon?limit=' + length + '&offset=' + offset;
+
+    // Assign contacts to the results of the url request.
+    await fetch(url)
         .then(response => response.json())
         .then(results => { contacts = results })
-        .catch(error => { console.log("Oh no, Error") });
+        .catch(_error => { console.log("Error with fetching Group9 API contacts. Trying PokeAPI.") });
 
-    await makeContacts(contacts)
+    // Call to the Group9 API failed. Attempt with PokeAPI.
+    if (contacts == null) {
+        await fetch(url_offline)
+            .then(response => response.json())
+            .then(results => { contacts = results })
+            .catch(_error => { console.log("Error with fetching PokeAPI contacts.") });
+    }
+
+    // Display contact cards.
+    await makeContacts(contacts);
 }
 
 async function makeContacts(contacts) {
@@ -261,7 +299,6 @@ async function makeContacts(contacts) {
         // creating list item and giving it bootstrap class
     let flag = 0;
     
-
     contacts.results.forEach(el => {
         //console.log(el);
         if (flag == 12)
@@ -289,12 +326,10 @@ async function makeContacts(contacts) {
         cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
         // cardimg.style.backgroundImage = "url('../images/letters/png/ " + firLetter +".png')";
         // cardimg.alt = 'Nothing'
-        let lName = el.LastName;
-        let number = el.Phone;
-        if (lName == undefined || number == undefined) {
-            lName = "test";
-            number = "123456789";
-        }
+        let lName = el.LastName == undefined ? "lastname" : el.LastName;
+        let number = el.Phone == undefined ? "1231231234" : el.Phone;
+        id = el.ID == undefined ? id : el.ID;
+        console.log(id);
         // adding our input our list item
 
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
@@ -313,7 +348,7 @@ async function makeContacts(contacts) {
 
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
-        cardDiv.setAttribute('id', id);
+        cardDiv.setAttribute('id', el.id);
         // cardDiv.style.width = '14rem';
         // cardDiv.style.height = '10rem';
 
@@ -395,69 +430,7 @@ function search() {
     }
 }
 
-// search the user contacts for given strings
-// function searchApi() {
-//     let searchBar = document.getElementById("search");
-//     let filter = searchBar.value;
-//     let userId = getUserID();
-//     let payload = JSON.stringify({
-//         'UserID': userId,
-//         'query': filter,
-//         'offset': 0,
-//         'length': 30
-//     });
-//     let url = "http://68.183.59.220/api/get_contact.php";
-//     let xhr = new XMLHttpRequest();
-//     console.log("sending " + payload + " to get_contacts.php");
-//     xhr.open("POST", url, false);
-//     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-
-//     try
-//     {
-//         xhr.send(payload);
-//         let response = JSON.parse(xhr.responseText);
-//         if (response.error.localeCompare("") != 0)
-//         {
-//             document.getElementById("error-tag").innerHTML = response.error;
-//             console.log(response.error);
-//             return;
-//         }
-//         console.log("Need to make contacts now");
-        
-//     }
-//     catch (err)
-//     {
-//         // If we get here, there was likely an issue with the API.
-//         // document.getElementById("error-tag").innerHTML = err.message;
-//         console.error("Error:\n" + err);
-//     }
-
-// }
-async function searchApi() {
-    let cards = document.getElementsByClassName("card");
-    let parentCard = document.getElementById("card");
-    let searchBar = document.getElementById("search");
-    let filter = searchBar.value;
-    let contacts;
-    let userid = getUserID();
-    console.log("User id: ", userid);
-
-    // parentCard.removeChild(cards);
-    // await cards.remove();
-
-    // group api query
-    // 'http://68.183.59.220/api/get_contacts.php?UserID=' + userid
-    //await fetch('https://pokeapi.co/api/v2/pokemon?limit=100&offset=200')
-
-    // await fetch('http://68.183.59.220/api/get_contacts.php?UserID=' + userid + "&query=" + filter)
-    //     .then(response => response.json())
-    //     .then(results => { contacts = results })
-    //     .catch(error => { console.log("Oh no, Error") });
-
-    // await makeContacts(contacts)
-}
-
-
+// Fetches the UserID from document.cookie to make API calls.
 function getUserID() {
     var userId = -1;
     const data = document.cookie;
@@ -471,22 +444,15 @@ function getUserID() {
             userId = parseInt(token[1].trim());
     }
 
-    // if (userId < 0)
-    //     window.location.href = "login.html";
+    // If we couldn't find the ID, redirect to login screen.
+    if (userId < 0)
+        window.location.href = "login.html";
+    // console.log("Fetched userId: " + userId);
     return userId;
 }
 
 function doLogout()
 {
-    deleteAllCookies();
+    document.cookie = "userId=-1; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     window.location.href = "login.html";
 }
-
-function deleteAllCookies() 
-{
-    let firstName = "";
-    var cookies = document.cookie.split(",");
-    document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-}
-
-const li = document.getElementsByClassName("id")
