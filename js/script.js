@@ -258,15 +258,23 @@ async function getContactsWithSearch() {
     // - length: The number of contacts to return.
     // - offset: Number of contacts to skip in the array being returned.
     // - query : Search string applied to each individual column of the database.
-
+    
     const params = '?UserID=' + getUserID() + '&length=' + length + '&offset=' + offset + '&query=' + searchBar.value;
 
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!
     // These lines throw the error:
     //      Uncaught (in promise) TypeError: 
     //      Failed to execute 'removeChild' on 'Node': parameter 1 is not of type 'Node'.
     // parentCard.removeChild(cards);
     // await cards.remove();
-
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    // If someone attempts to query an empty string, return all the contacts.
+    if (searchBar.value == '') {
+        getContacts();
+        return;
+    }
+    
     fetchContactsWithUrl(url + params);
 }
 
