@@ -317,8 +317,8 @@ async function makeContacts(contacts) {
         cardText.setAttribute('class', 'card-text');
 
         // getting our inputs
-        // let fName = el.FirstName;
-        let fName = el.name;
+        let fName = el.name == undefined ? el.FirstName : el.name;
+        
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
@@ -445,8 +445,8 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
     // console.log("Fetched userId: " + userId);
     return userId;
 }
