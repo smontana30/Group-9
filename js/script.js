@@ -261,8 +261,11 @@ async function getContactsWithSearch() {
 
     const params = '?UserID=' + getUserID() + '&length=' + length + '&offset=' + offset + '&query=' + searchBar.value;
 
-    parentCard.removeChild(cards);
-    await cards.remove();
+    // These lines throw the error:
+    //      Uncaught (in promise) TypeError: 
+    //      Failed to execute 'removeChild' on 'Node': parameter 1 is not of type 'Node'.
+    // parentCard.removeChild(cards);
+    // await cards.remove();
 
     fetchContactsWithUrl(url + params);
 }
@@ -318,7 +321,7 @@ async function makeContacts(contacts) {
 
         // getting our inputs
         let fName = el.name == undefined ? el.FirstName : el.name;
-        
+
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
         // let src = "/letters/png/" + firLetter + ".png";
@@ -328,8 +331,9 @@ async function makeContacts(contacts) {
         // cardimg.alt = 'Nothing'
         let lName = el.LastName == undefined ? "lastname" : el.LastName;
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
+
+        // Changing the card ID to be the contact ID to allow for easier deletion and editing.
         id = el.ID == undefined ? id : el.ID;
-        console.log(id);
         // adding our input our list item
 
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
