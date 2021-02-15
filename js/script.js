@@ -295,6 +295,20 @@ async function makeContacts(contacts) {
         id = el.ID == undefined ? id : el.ID;
         // adding our input our list item
 
+
+        // go through all cards and see if new card is already saved if the card is
+        // already saved, we delete it locally and continue replacing it with this new one
+        let cards = document.getElementsByClassName("card");
+        // search for fname lname to know which card to delete
+        for (let i = 0; i < cards.length; i++) {
+            let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+            let textContent = cardTitle.textContent;
+            let str = fName + " " + lName;
+            if (textContent.match(str)) {
+                cards[i].remove();
+            }
+        }
+
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
         cardText.appendChild(document.createTextNode(number));
 
