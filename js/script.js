@@ -13,23 +13,23 @@ function addContact() {
     // Create a function to remove any non-digits from the phone number.
     let phoneNum = document.getElementById('phone-number').value;
 
-    try {
-        let payload = JSON.stringify({
-            'FirstName': firstName,
-            'LastName': lastName,
-            'Phone': phoneNum,
-            'UserID': getUserID()
-        });
-        let url = "http://68.183.59.220/api/add_contact.php";
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", url, false);
-        xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-        xhr.send(payload);
-    } catch (error) {
-        // If we get here, there was likely an issue with the API.
-        // document.getElementById("error-tag").innerHTML = err.message;
-        console.error("Error:\n" + err)
-    }
+    // try {
+    //     let payload = JSON.stringify({
+    //         'FirstName': firstName,
+    //         'LastName': lastName,
+    //         'Phone': phoneNum,
+    //         'UserID': getUserID()
+    //     });
+    //     let url = "http://68.183.59.220/api/add_contact.php";
+    //     let xhr = new XMLHttpRequest();
+    //     xhr.open("POST", url, false);
+    //     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+    //     xhr.send(payload);
+    // } catch (error) {
+    //     // If we get here, there was likely an issue with the API.
+    //     // document.getElementById("error-tag").innerHTML = err.message;
+    //     console.error("Error:\n" + err)
+    // }
 
     let divBody = document.createElement("div");
     divBody.setAttribute('class', "card-body");
@@ -79,9 +79,38 @@ function addContact() {
         let updateBtn = document.getElementById('modal3button');
         updateBtn.setAttribute('data-bs-toggle', "modal");
         updateBtn.setAttribute('data-bs-target', "#myModal2");
-        // here will an event listner for click and send data to update card
-        // will probaby send first and last name and phone number to update to search for 
-        // card to update. then use flag to let us know if we need to update the card.
+
+        updateBtn.addEventListener('click', function() {
+            let update = document.getElementById('updateBtn');
+            update.addEventListener('click', function() {
+                let cards = document.getElementsByClassName("card");
+                let updateFName = document.getElementById('updateFname').value;
+                let updateLName = document.getElementById('updateLast').value;
+                let updateNum = document.getElementById('updateNum').value;
+
+                for (let i = 0; i < cards.length; i++) {
+                    let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+                    let cardText = cards[i].getElementsByClassName('card-text')[0];
+                    let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
+                    let textContent = cardTitle.textContent;
+                    let searchedCard = firstName + " " + lastName;
+                    if (textContent.match(searchedCard)) {
+                        let title = updateFName + " " + updateLName;
+                        let text = updateNum;
+                        cardTitle.innerText = title;
+                        cardText.innerText = text;
+                        let letter = updateFName.toLowerCase().charAt(0);
+                        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
+                    }
+                }
+            })
+
+            document.getElementById('updateFname').value = "";
+            document.getElementById('updateLast').value = "";
+            document.getElementById('updateNum').value = "";
+            
+        });
+
         let deleteBtn = document.getElementById('modal3delete');
 
         deleteBtn.addEventListener('click', function() {
@@ -108,9 +137,6 @@ function addContact() {
     divBody.appendChild(cardTitle);
     divBody.appendChild(cardText);
 
-    // divBody.appendChild(updateBtn);
-    // divBody.appendChild(deleteBtn);
-
     // adding our list item to our list
     cardDiv.appendChild(cardimg);
     cardDiv.appendChild(divBody);
@@ -120,12 +146,6 @@ function addContact() {
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
-
-    // listEl.appendChild(updateBtn);
-    // listEl.appendChild(deleteBtn);
-
-    // // adding our list item to our list
-    // ulEl.appendChild(listEl);
 
 }
 
@@ -347,17 +367,6 @@ async function makeContacts(contacts) {
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
         cardText.appendChild(document.createTextNode(number));
 
-
-        // let updateBtn = document.createElement('button');
-        // updateBtn.textContent = "Update";
-        // updateBtn.setAttribute('class', "btn btn-secondary");
-        // updateBtn.setAttribute('data-bs-toggle', "modal");
-        // updateBtn.setAttribute('data-bs-target', "#myModal2");
-
-        // let deleteBtn = document.createElement('button');
-        // deleteBtn.textContent = "Delete";
-        // deleteBtn.setAttribute('class', "btn btn-secondary");
-
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
         cardDiv.setAttribute('id', el.id);
@@ -375,6 +384,37 @@ async function makeContacts(contacts) {
             let updateBtn = document.getElementById('modal3button');
             updateBtn.setAttribute('data-bs-toggle', "modal");
             updateBtn.setAttribute('data-bs-target', "#myModal2");
+
+            updateBtn.addEventListener('click', function() {
+                let update = document.getElementById('updateBtn');
+                update.addEventListener('click', function() {
+                    let cards = document.getElementsByClassName("card");
+                    let updateFName = document.getElementById('updateFname').value;
+                    let updateLName = document.getElementById('updateLast').value;
+                    let updateNum = document.getElementById('updateNum').value;
+ 
+                    for (let i = 0; i < cards.length; i++) {
+                        let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+                        let cardText = cards[i].getElementsByClassName('card-text')[0];
+                        let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
+                        let textContent = cardTitle.textContent;
+                        let searchedCard = fName + " " + lName;
+                        if (textContent.match(searchedCard)) {
+                            let title = updateFName + " " + updateLName;
+                            let text = updateNum;
+                            cardTitle.innerText = title;
+                            cardText.innerText = text;
+                            let letter = updateFName.toLowerCase().charAt(0);
+                            cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
+                        }
+                    }
+                })
+
+                document.getElementById('updateFname').value = "";
+                document.getElementById('updateLast').value = "";
+                document.getElementById('updateNum').value = "";
+                
+            });
 
             let deleteBtn = document.getElementById('modal3delete');
             deleteBtn.addEventListener('click', function() {
