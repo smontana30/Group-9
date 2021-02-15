@@ -1,7 +1,6 @@
 let offset = 0; // For selecting previous/next couple of contacts.
 let id = 0;
 const length = 12; // Number of contacts to show on the screen.
-const li = document.getElementsByClassName("id")
 
 function addContact() {
     // // getting out list element
@@ -13,23 +12,23 @@ function addContact() {
     // Create a function to remove any non-digits from the phone number.
     let phoneNum = document.getElementById('phone-number').value;
 
-    // try {
-    //     let payload = JSON.stringify({
-    //         'FirstName': firstName,
-    //         'LastName': lastName,
-    //         'Phone': phoneNum,
-    //         'UserID': getUserID()
-    //     });
-    //     let url = "http://68.183.59.220/api/add_contact.php";
-    //     let xhr = new XMLHttpRequest();
-    //     xhr.open("POST", url, false);
-    //     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-    //     xhr.send(payload);
-    // } catch (error) {
-    //     // If we get here, there was likely an issue with the API.
-    //     // document.getElementById("error-tag").innerHTML = err.message;
-    //     console.error("Error:\n" + err)
-    // }
+    try {
+        let payload = JSON.stringify({
+            'FirstName': firstName,
+            'LastName': lastName,
+            'Phone': phoneNum,
+            'UserID': getUserID()
+        });
+        let url = "http://68.183.59.220/api/add_contact.php";
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, false);
+        xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+        xhr.send(payload);
+    } catch (error) {
+        // If we get here, there was likely an issue with the API.
+        // document.getElementById("error-tag").innerHTML = err.message;
+        console.error("Error:\n" + err)
+    }
 
     let divBody = document.createElement("div");
     divBody.setAttribute('class', "card-body");
@@ -87,7 +86,6 @@ function addContact() {
                 let updateFName = document.getElementById('updateFname').value;
                 let updateLName = document.getElementById('updateLast').value;
                 let updateNum = document.getElementById('updateNum').value;
-
                 for (let i = 0; i < cards.length; i++) {
                     let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                     let cardText = cards[i].getElementsByClassName('card-text')[0];
@@ -102,6 +100,23 @@ function addContact() {
                         let letter = updateFName.toLowerCase().charAt(0);
                         cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
                     }
+                }
+                try {
+                    let payload = JSON.stringify({
+                        'FirstName': updateFName,
+                        'LastName': updateLName,
+                        'Phone': updateNum,
+                        'UserID': getUserID()
+                    });
+                    let url = "http://68.183.59.220/api/edit_contact.php";
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, false);
+                    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                    xhr.send(payload);
+                } catch (error) {
+                    // If we get here, there was likely an issue with the API.
+                    // document.getElementById("error-tag").innerHTML = err.message;
+                    console.error("Error:\n" + err)
                 }
             })
 
@@ -120,14 +135,32 @@ function addContact() {
             // card1.remove();
             let cards = document.getElementsByClassName("card");
             console.log(cards.length);
+            let updateId = 0;
             // search for fname lname to know which card to delete
             for (let i = 0; i < cards.length; i++) {
                 let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                 let textContent = cardTitle.textContent;
                 let str = firstName + " " + lastName;
                 if (textContent.match(str)) {
+                    updateId = i;
                     cards[i].remove();
                 }
+            }
+            
+            try {
+                let payload = JSON.stringify({
+                    'ID': updateId,
+                    'UserID': getUserID()
+                });
+                let url = "http://68.183.59.220/api/delete_contact.php";
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", url, false);
+                xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                xhr.send(payload);
+            } catch (error) {
+                // If we get here, there was likely an issue with the API.
+                // document.getElementById("error-tag").innerHTML = err.message;
+                console.error("Error:\n" + err)
             }
         });
 
@@ -147,108 +180,6 @@ function addContact() {
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
 
-}
-
-function deleteContact(deleteCard) {
-    let parentDiv = document.getElementById('card');
-    parentDiv.removeChild(deleteCard);
-    
-}
-
-function updateCard() {
-    // // getting out list element
-    let div = document.getElementById('card');
-
-    // // creating list item and giving it bootstrap class
-    // let listEl = document.createElement("li");
-    // let aref = document.createElement('a');
-    // listEl.classList.add("list-group-item");
-
-
-    // // getting our inputs
-    let firstName = document.getElementById('firstName').value;
-    let lastName = document.getElementById('lastName').value;
-    let phoneNum = document.getElementById('phone-number').value;
-
-    let divBody = document.createElement("div");
-    divBody.setAttribute('class', "card-body");
-
-    // let cardimg = document.createElement('img');
-    // cardimg.setAttribute('class', 'card-img-top');
-
-    let cardTitle = document.createElement('h5');
-    cardTitle.setAttribute('class', "card-title");
-
-    let cardText = document.createElement('h6');
-    cardText.setAttribute('class', 'card-text');
-
-    // adding our input our list item  
-    cardTitle.appendChild(document.createTextNode(firstName + " " + lastName));
-    cardText.appendChild(document.createTextNode(phoneNum));
-    let updateBtn = document.createElement('button');
-    updateBtn.textContent = "Update";
-    updateBtn.setAttribute('class', "btn btn-secondary");
-    updateBtn.setAttribute('data-bs-toggle', "modal");
-    updateBtn.setAttribute('data-bs-target', "#myModal2");
-
-    let deleteBtn = document.createElement('button');
-    deleteBtn.textContent = "Delete";
-    deleteBtn.setAttribute('class', "btn btn-secondary");
-
-    let cardDiv = document.createElement("div");
-    cardDiv.setAttribute('class', "card");
-    cardDiv.style.width = '14rem';
-    cardDiv.style.height = '10rem';
-
-    divBody.appendChild(cardTitle);
-    divBody.appendChild(cardText);
-    divBody.appendChild(updateBtn);
-    divBody.appendChild(deleteBtn);
-
-    // adding our list item to our list
-    // cardDiv.appendChild(cardimg);
-    cardDiv.appendChild(divBody);
-    div.appendChild(cardDiv);
-
-    cardDiv.addEventListener('click', function() {
-        this.setAttribute('data-bs-toggle', 'modal');
-        this.setAttribute('data-bs-target', '#myModal3');
-        let modal = document.getElementById('modal3');
-        let modalname = document.getElementById('fullName');
-        let modalphone = document.getElementById('phNumber');
-        modalname.textContent = "Name: " + firstName + " " + lastName;
-        modalphone.innerText = "Phone: " + phoneNum;
-        let updateBtn = document.getElementById('modal3button');
-        updateBtn.setAttribute('data-bs-toggle', "modal");
-        updateBtn.setAttribute('data-bs-target', "#myModal2");
-        // here will an event listner for click and send data to update card
-        // will probaby send first and last name and phone number to update to search for 
-        // card to update. then use flag to let us know if we need to update the card.
-        let deleteBtn = document.getElementById('modal3delete');
-
-        deleteBtn.addEventListener('click', function() {
-            // let num = id.toString();
-            // console.log("id of card is: " + num);
-            // let card1 = document.getElementById('1');
-            // card1.remove();
-            let cards = document.getElementsByClassName("card");
-            console.log(cards.length);
-            // search for fname lname to know which card to delete
-            for (let i = 0; i < cards.length; i++) {
-                let cardTitle = cards[i].getElementsByClassName('card-title')[0];
-                let textContent = cardTitle.textContent;
-                let str = fName + " " + lName;
-                if (textContent.match(str)) {
-                    cards[i].remove();
-                }
-            }
-        });
-    });
-
-    // // resetting inputs
-    document.getElementById('firstName').value = "";
-    document.getElementById('lastName').value = "";
-    document.getElementById('phone-number').value = "";
 }
 
 // Function called to send a POST request to the API and display contact cards
@@ -408,7 +339,25 @@ async function makeContacts(contacts) {
                             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
                         }
                     }
-                })
+                });
+
+                try {
+                    let payload = JSON.stringify({
+                        'FirstName': updateFName,
+                        'LastName': updateLName,
+                        'Phone': updateNum,
+                        'UserID': getUserID()
+                    });
+                    let url = "http://68.183.59.220/api/edit_contact.php";
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, false);
+                    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                    xhr.send(payload);
+                } catch (error) {
+                    // If we get here, there was likely an issue with the API.
+                    // document.getElementById("error-tag").innerHTML = err.message;
+                    console.error("Error:\n" + err)
+                }
 
                 document.getElementById('updateFname').value = "";
                 document.getElementById('updateLast').value = "";
@@ -423,15 +372,32 @@ async function makeContacts(contacts) {
                 // let card1 = document.getElementById('1');
                 // card1.remove();
                 let cards = document.getElementsByClassName("card");
-                console.log(cards.length);
+                let updateId = 0;
                 // search for fname lname to know which card to delete
                 for (let i = 0; i < cards.length; i++) {
                     let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                     let textContent = cardTitle.textContent;
                     let str = fName + " " + lName;
                     if (textContent.match(str)) {
+                        updateId = i;
                         cards[i].remove();
                     }
+                }
+
+                try {
+                    let payload = JSON.stringify({
+                        'ID': updateId,
+                        'UserID': getUserID()
+                    });
+                    let url = "http://68.183.59.220/api/delete_contact.php";
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, false);
+                    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                    xhr.send(payload);
+                } catch (error) {
+                    // If we get here, there was likely an issue with the API.
+                    // document.getElementById("error-tag").innerHTML = err.message;
+                    console.error("Error:\n" + err)
                 }
             });
             // here will an event listner for click and send data to update card
@@ -497,9 +463,10 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    // if (userId < 0)
-    //     window.location.href = "login.html";
-    // console.log("Fetched userId: " + userId);
+    if (userId < 0)
+        window.location.href = "login.html";
+
+    console.log("Fetched userId: " + userId);
     return userId;
 }
 
