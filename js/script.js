@@ -296,8 +296,8 @@ async function makeContacts(contacts) {
         // adding our input our list item
 
 
-        // go through all cards and see if new card is already saved if the card is
-        // already saved, we delete it locally and continue replacing it with this new one
+        // if we are searching for information already on the website we delete the info already
+        // on it and replace it with a new card. this is to avoid having duplicate cards
         let cards = document.getElementsByClassName("card");
         // search for fname lname to know which card to delete
         for (let i = 0; i < cards.length; i++) {
