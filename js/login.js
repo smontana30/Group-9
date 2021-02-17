@@ -11,7 +11,7 @@ function login()
     const login_form = document.getElementById("login-form");
     const email = login_form.email.value;
     const password = login_form.password.value;
-    const url = "http://68.183.59.220/api/login.php";
+    const url = "http://tinytelephonetime.ninja/api/login.php";
     const payload = JSON.stringify({'login': email, 'password':password});
 
     try

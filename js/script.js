@@ -19,7 +19,7 @@ function addContact() {
             'Phone': phoneNum,
             'UserID': getUserID()
         });
-        let url = "http://68.183.59.220/api/add_contact.php";
+        let url = "http://tinytelephonetime.ninja/api/add_contact.php";
         let xhr = new XMLHttpRequest();
         xhr.open("POST", url, false);
         xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
@@ -108,7 +108,7 @@ function addContact() {
                         'Phone': updateNum,
                         'UserID': getUserID()
                     });
-                    let url = "http://68.183.59.220/api/edit_contact.php";
+                    let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
                     let xhr = new XMLHttpRequest();
                     xhr.open("POST", url, false);
                     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
@@ -152,7 +152,7 @@ function addContact() {
                     'ID': updateId,
                     'UserID': getUserID()
                 });
-                let url = "http://68.183.59.220/api/delete_contact.php";
+                let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", url, false);
                 xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
@@ -185,7 +185,7 @@ function addContact() {
 // Function called to send a POST request to the API and display contact cards
 // to the screen, omitting the query parameter.
 async function getContacts() {
-    const url_online = 'http://68.183.59.220/api/get_contacts.php';
+    const url_online = 'http://tinytelephonetime.ninja/api/get_contacts.php';
 
     // URL Parameters:
     // - UserID: The unique ID of the currently logged in user, stored in a cookie.
@@ -200,7 +200,7 @@ async function getContacts() {
 // to the screen, including the query parameter.
 async function getContactsWithSearch() {
     let searchBar = document.getElementById("search");
-    const url = 'http://68.183.59.220/api/get_contacts.php';
+    const url = 'http://tinytelephonetime.ninja/api/get_contacts.php';
 
     // URL Parameters:
     // - UserID: The unique ID of the currently logged in user, stored in a cookie.
@@ -223,7 +223,7 @@ async function getContactsWithSearch() {
 // Function called to send a POST request to the API and display contact cards
 // to the screen, including the query parameter.
 async function getAllContactsWithSearch() {
-    const url = 'http://68.183.59.220/api/get_contacts.php';
+    const url = 'http://tinytelephonetime.ninja/api/get_contacts.php';
 
     // URL Parameters:
     // - UserID: The unique ID of the currently logged in user, stored in a cookie.
@@ -369,7 +369,7 @@ async function makeContacts(contacts) {
                         'Phone': updateNum,
                         'UserID': getUserID()
                     });
-                    let url = "http://68.183.59.220/api/edit_contact.php";
+                    let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
                     let xhr = new XMLHttpRequest();
                     xhr.open("POST", url, false);
                     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
@@ -410,7 +410,7 @@ async function makeContacts(contacts) {
                         'ID': updateId,
                         'UserID': getUserID()
                     });
-                    let url = "http://68.183.59.220/api/delete_contact.php";
+                    let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
                     let xhr = new XMLHttpRequest();
                     xhr.open("POST", url, false);
                     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
@@ -472,13 +472,14 @@ function search() {
 
 // searches through all contacts and loads cards for only the ones
 // matching the what is on the search bar
+// STILL IN PROGRESS - DOESN'T WORK YET
 async function searchWithApi() {
     let contacts = null;
     let filteredContacts = null;
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
 
-    const url = 'http://68.183.59.220/api/get_contacts.php' + '?UserID=' + getUserID();
+    const url = 'http://tinytelephonetime.ninja/api/get_contacts.php' + '?UserID=' + getUserID();
 
     // Assign contacts to the results of the url request.
     await fetch(url)
