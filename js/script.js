@@ -212,6 +212,7 @@ async function getContactsWithSearch() {
     
     // If someone attempts to query an empty string, return all the contacts.
     if (searchBar.value == '') {
+        alert("Error: Please search for a valid user");
         getContacts();
         return;
     }
@@ -446,6 +447,7 @@ async function makeContacts(contacts) {
 
 // searches only contacts on the screen
 function search() {
+    let contacts = null;
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
     let card = document.getElementById("card");
@@ -466,6 +468,31 @@ function search() {
             cardBody[i].style.display = "none";
         }
     }
+}
+
+// searches through all contacts and loads cards for only the ones
+// matching the what is on the search bar
+function searchWithApi() {
+    let searchBar = document.getElementById("search");
+    let filter = searchBar.value.toLowerCase();
+
+    const url = 'http://68.183.59.220/api/get_contacts.php' + '?UserID=' + getUserID();
+
+    // Assign contacts to the results of the url request.
+    await fetch(url)
+        .then(response => response.json())
+        .then(results => { contacts = results })
+        .catch(_error => { console.log("Error with fetching Group9 API contacts.") });
+    
+    contacts.results.forEach(el => {
+        str = el.FirstName + " " + el.LastName;
+        if (filter.match(str)) {
+            el.remove();
+        }
+    });
+
+    // Display contact cards.
+    await makeContacts(contacts);
 }
 
 // Fetches the UserID from document.cookie to make API calls.

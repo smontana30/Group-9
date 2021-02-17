@@ -17,7 +17,6 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <span class="navbar-brand mb-0 h1">Contact App</span>
-        
             <button type="button" class="btn btn-secondary" onclick="doLogout()">Logout</button>
         </div>
     </nav>
@@ -27,8 +26,8 @@
         <div class="contacts">
             <div class="input-group mb-3">
                 <input placeholder="Search" onkeyup="search()" id="search" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                <button type="button" class="btn btn-secondary" onclick="getContactsWithSearch()">Search</button>
-                <button type="button" class="btn btn-secondary" onclick="getAllContactsWithSearch()">Search All</button>
+                <button type="button" class="btn btn-secondary" onclick="searchWithApi()">Search</button>
+                <button type="button" class="btn btn-secondary" onclick="getAllContactsWithSearch()">Show All</button>
                 <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#myModal" id="addbtn">Add Contact</button>
             </div>
 
