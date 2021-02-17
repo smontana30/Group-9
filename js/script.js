@@ -472,7 +472,7 @@ function search() {
 
 // searches through all contacts and loads cards for only the ones
 // matching the what is on the search bar
-async function searchWithApi() {
+function searchWithApi() {
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
 
