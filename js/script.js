@@ -473,6 +473,8 @@ function search() {
 // searches through all contacts and loads cards for only the ones
 // matching the what is on the search bar
 async function searchWithApi() {
+    let contacts = null;
+    let filteredContacts = null;
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
 
@@ -487,12 +489,12 @@ async function searchWithApi() {
     contacts.results.forEach(el => {
         str = el.FirstName + " " + el.LastName;
         if (filter.match(str)) {
-            el.remove();
+            filteredContacts.results.add(el);
         }
     });
 
     // Display contact cards.
-    await makeContacts(contacts);
+    await makeContacts(filteredContacts);
 }
 
 // Fetches the UserID from document.cookie to make API calls.
