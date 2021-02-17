@@ -269,8 +269,8 @@ async function makeContacts(contacts) {
     
     contacts.results.forEach(el => {
         //console.log(el);
-        if (flag == 12)
-            return;
+        // if (flag == 12)
+        //     return;
 
         let divBody = document.createElement("div");
         divBody.setAttribute('class', "card-body");
