@@ -494,7 +494,7 @@ async function searchWithApi() {
         .then(results => { contacts = results })
         .catch(_error => { console.log("Error with fetching Group9 API contacts.") });
     
-    contacts.results.forEach(el => {
+    await contacts.results.forEach(el => {
         str = el.FirstName + " " + el.LastName;
         if (filter.match(str.toLowerCase())) {
             object.results.add(el);
