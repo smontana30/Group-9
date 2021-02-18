@@ -31,7 +31,6 @@ function addContact() {
     }
 
     getNewContact(firstName + " " + lastName);
-
 }
 
 // Function called to send a POST request to the API and display contact cards
@@ -364,7 +363,7 @@ async function searchWithApi() {
 async function getNewContact(newCon) {
     let contacts = null;
     let object = {"results":[]}
-    
+
     const url = 'http://tinytelephonetime.ninja/api/get_contacts.php' + '?UserID=' + getUserID();
 
     // Assign contacts to the results of the url request.
