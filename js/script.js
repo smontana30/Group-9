@@ -504,16 +504,16 @@ async function searchWithApi() {
         if (str.toLowerCase().includes(filter)) {
             console.log("Inside If");
             object.results.push(el);
-            filteredContacts.push(object.results);
+            //filteredContacts.push(object.results);
             console.log(object);
-            console.log(filteredContacts);
+            //console.log(filteredContacts);
         }
     });
 
     await console.log(object);
-    await console.log(filteredContacts);
+    //await console.log(filteredContacts);
     // Display contact cards.
-    await makeContacts(filteredContacts);
+    await makeContacts(object);
 }
 
 // Fetches the UserID from document.cookie to make API calls.
