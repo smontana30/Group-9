@@ -358,14 +358,13 @@ async function makeContacts(contacts) {
                         if (textContent.match(searchedCard)) {
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
-                            updateId = cards[i].id;
+                            updateId = cards[i].getAttribute(id);
                             cardTitle.innerText = title;
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
                             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
 
                             try {
-                                console.log("Got here");
                                 let payload = JSON.stringify({
                                     'FirstName': updateFName,
                                     'LastName': updateLName,
