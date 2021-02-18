@@ -363,28 +363,30 @@ async function makeContacts(contacts) {
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
                             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
+
+                            try {
+                                let payload = JSON.stringify({
+                                    'FirstName': updateFName,
+                                    'LastName': updateLName,
+                                    'Phone': updateNum,
+                                    'ID': updateId,
+                                    'UserID': getUserID()
+                                });
+                                let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
+                                let xhr = new XMLHttpRequest();
+                                xhr.open("POST", url, false);
+                                xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                                xhr.send(payload);
+                            } catch (error) {
+                                // If we get here, there was likely an issue with the API.
+                                // document.getElementById("error-tag").innerHTML = err.message;
+                                console.error("Error:\n" + error)
+                            }
                         }
                     }
                 });
 
-                try {
-                    let payload = JSON.stringify({
-                        'FirstName': updateFName,
-                        'LastName': updateLName,
-                        'Phone': updateNum,
-                        'ID': updateId,
-                        'UserID': getUserID()
-                    });
-                    let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
-                    let xhr = new XMLHttpRequest();
-                    xhr.open("POST", url, false);
-                    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-                    xhr.send(payload);
-                } catch (error) {
-                    // If we get here, there was likely an issue with the API.
-                    // document.getElementById("error-tag").innerHTML = err.message;
-                    console.error("Error:\n" + err)
-                }
+                
 
                 document.getElementById('updateFname').value = "";
                 document.getElementById('updateLast').value = "";
@@ -478,10 +480,8 @@ function search() {
 
 // searches through all contacts and loads cards for only the ones
 // matching the what is on the search bar
-// STILL IN PROGRESS - DOESN'T WORK YET
 async function searchWithApi() {
     let contacts = null;
-    let filteredContacts = {};
     let object = {"results":[]}
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
@@ -494,24 +494,13 @@ async function searchWithApi() {
         .then(results => { contacts = results })
         .catch(_error => { console.log("Error with fetching Group9 API contacts.") });
     
-    await console.log("About to enter for each loop");
     await contacts.results.forEach(el => {
-        console.log("Inside loop");
-        console.log(filter);
         str = el.FirstName + " " + el.LastName;
-        console.log(str);
-
         if (str.toLowerCase().includes(filter)) {
-            console.log("Inside If");
             object.results.push(el);
-            //filteredContacts.push(object.results);
-            console.log(object);
-            //console.log(filteredContacts);
         }
     });
 
-    await console.log(object);
-    //await console.log(filteredContacts);
     // Display contact cards.
     await makeContacts(object);
 }
