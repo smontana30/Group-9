@@ -494,9 +494,11 @@ async function searchWithApi() {
         .then(results => { contacts = results })
         .catch(_error => { console.log("Error with fetching Group9 API contacts.") });
     
+    await console.log("About to enter for each loop");
     await contacts.results.forEach(el => {
+        console.log("Inside loop");
         str = el.FirstName + " " + el.LastName;
-        if (filter.match(str.toLowerCase())) {
+        if (filter.includes(str.toLowerCase())) {
             object.results.add(el);
             filteredContacts.add(object);
             console.log(object);
@@ -504,7 +506,8 @@ async function searchWithApi() {
         }
     });
 
-
+    await console.log(object);
+    await console.log(filteredContacts);
     // Display contact cards.
     await makeContacts(filteredContacts);
 }
