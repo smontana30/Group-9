@@ -145,7 +145,7 @@ function addContact() {
                 let textContent = cardTitle.textContent;
                 let str = firstName + " " + lastName;
                 if (textContent.match(str)) {
-                    updateId = card[i].id;
+                    updateId = cards[i].id;
                     cards[i].remove();
                 }
             }
@@ -406,7 +406,7 @@ async function makeContacts(contacts) {
                     let textContent = cardTitle.textContent;
                     let str = fName + " " + lName;
                     if (textContent.match(str)) {
-                        updateId = card[i].id;
+                        updateId = cards[i].id;
                         cards[i].remove();
                     }
                 }
