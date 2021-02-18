@@ -482,7 +482,7 @@ function search() {
 async function searchWithApi() {
     let contacts = null;
     let filteredContacts = [];
-    let object = {"results":null}
+    let object = {"results":undefined}
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
 
