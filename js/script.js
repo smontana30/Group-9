@@ -363,7 +363,7 @@ async function makeContacts(contacts) {
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
                             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
-                            console.log(payload);
+                            
                             try {
                                 let payload = JSON.stringify({
                                     'FirstName': updateFName,
@@ -372,6 +372,7 @@ async function makeContacts(contacts) {
                                     'ID': updateId,
                                     'UserID': getUserID()
                                 });
+                                console.log(payload);
                                 let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
                                 let xhr = new XMLHttpRequest();
                                 xhr.open("POST", url, false);
