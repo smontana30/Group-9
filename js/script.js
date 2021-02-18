@@ -504,7 +504,7 @@ async function searchWithApi() {
         if (str.toLowerCase().includes(filter)) {
             console.log("Inside If");
             object.results.push(el);
-            filteredContacts.add(object.results);
+            filteredContacts.push(object.results);
             console.log(object);
             console.log(filteredContacts);
         }
