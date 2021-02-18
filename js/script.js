@@ -350,6 +350,7 @@ async function makeContacts(contacts) {
                     
                     let updateId;
                     for (let i = 0; i < cards.length; i++) {
+                        console.log(cards[i].id);
                         let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                         let cardText = cards[i].getElementsByClassName('card-text')[0];
                         let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
