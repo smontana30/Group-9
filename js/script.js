@@ -358,7 +358,7 @@ async function makeContacts(contacts) {
                         if (textContent.match(searchedCard)) {
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
-                            updateId = cards[i].getElementsByClassName('div')[0].getAttribute('id');
+                            updateId = this.getAttribute('id');
                             cardTitle.innerText = title;
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
