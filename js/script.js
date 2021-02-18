@@ -365,6 +365,8 @@ async function makeContacts(contacts) {
                             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
 
                             try {
+                                console.log("Got here");
+                                console.log(payload);
                                 let payload = JSON.stringify({
                                     'FirstName': updateFName,
                                     'LastName': updateLName,
