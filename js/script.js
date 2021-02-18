@@ -366,7 +366,6 @@ async function makeContacts(contacts) {
 
                             try {
                                 console.log("Got here");
-                                console.log(payload);
                                 let payload = JSON.stringify({
                                     'FirstName': updateFName,
                                     'LastName': updateLName,
@@ -374,6 +373,7 @@ async function makeContacts(contacts) {
                                     'ID': updateId,
                                     'UserID': getUserID()
                                 });
+                                console.log(payload);
                                 let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
                                 let xhr = new XMLHttpRequest();
                                 xhr.open("POST", url, false);
