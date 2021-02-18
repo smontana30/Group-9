@@ -501,7 +501,7 @@ async function searchWithApi() {
         str = el.FirstName + " " + el.LastName;
         console.log(str);
 
-        if (filter.includes(str.toLowerCase())) {
+        if (str.toLowerCase().includes(filter)) {
             console.log("Inside If");
             object.results.add(el);
             filteredContacts.add(object);
