@@ -358,7 +358,7 @@ async function makeContacts(contacts) {
                         if (textContent.match(searchedCard)) {
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
-                            updateId = document.getElementById("div").id;
+                            updateId = cardDiv.getAttribute('id');
                             cardTitle.innerText = title;
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
@@ -372,7 +372,6 @@ async function makeContacts(contacts) {
                                     'ID': updateId,
                                     'UserID': getUserID()
                                 });
-                                console.log(payload);
                                 let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
                                 let xhr = new XMLHttpRequest();
                                 xhr.open("POST", url, false);
