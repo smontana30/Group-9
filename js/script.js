@@ -481,7 +481,7 @@ function search() {
 // STILL IN PROGRESS - DOESN'T WORK YET
 async function searchWithApi() {
     let contacts = null;
-    let filteredContacts = [];
+    let filteredContacts = {};
     let object = {"results":[]}
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
@@ -503,7 +503,7 @@ async function searchWithApi() {
 
         if (str.toLowerCase().includes(filter)) {
             console.log("Inside If");
-            object.results.add(el);
+            object.results.push(el);
             filteredContacts.add(object);
             console.log(object);
             console.log(filteredContacts);
