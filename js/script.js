@@ -481,7 +481,8 @@ function search() {
 // STILL IN PROGRESS - DOESN'T WORK YET
 async function searchWithApi() {
     let contacts = null;
-    let filteredContacts = null;
+    let filteredContacts = [];
+    let object = {"results":null}
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
 
@@ -495,10 +496,12 @@ async function searchWithApi() {
     
     contacts.results.forEach(el => {
         str = el.FirstName + " " + el.LastName;
-        if (filter.match(str)) {
-            filteredContacts.results.add(el);
+        if (filter.match(str.toLowerCase())) {
+            object.results.add(el);
+            filteredContacts.add(object);
         }
     });
+
 
     // Display contact cards.
     await makeContacts(filteredContacts);
