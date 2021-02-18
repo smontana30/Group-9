@@ -86,6 +86,7 @@ function addContact() {
                 let updateFName = document.getElementById('updateFname').value;
                 let updateLName = document.getElementById('updateLast').value;
                 let updateNum = document.getElementById('updateNum').value;
+                let updateId;
                 for (let i = 0; i < cards.length; i++) {
                     let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                     let cardText = cards[i].getElementsByClassName('card-text')[0];
@@ -95,6 +96,7 @@ function addContact() {
                     if (textContent.match(searchedCard)) {
                         let title = updateFName + " " + updateLName;
                         let text = updateNum;
+                        updateId = cards[i].id;
                         cardTitle.innerText = title;
                         cardText.innerText = text;
                         let letter = updateFName.toLowerCase().charAt(0);
@@ -106,6 +108,7 @@ function addContact() {
                         'FirstName': updateFName,
                         'LastName': updateLName,
                         'Phone': updateNum,
+                        'ID': updateId,
                         'UserID': getUserID()
                     });
                     let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
@@ -142,7 +145,7 @@ function addContact() {
                 let textContent = cardTitle.textContent;
                 let str = firstName + " " + lastName;
                 if (textContent.match(str)) {
-                    updateId = i;
+                    updateId = card[i].id;
                     cards[i].remove();
                 }
             }
@@ -344,7 +347,8 @@ async function makeContacts(contacts) {
                     let updateFName = document.getElementById('updateFname').value;
                     let updateLName = document.getElementById('updateLast').value;
                     let updateNum = document.getElementById('updateNum').value;
- 
+                    
+                    let updateId;
                     for (let i = 0; i < cards.length; i++) {
                         let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                         let cardText = cards[i].getElementsByClassName('card-text')[0];
@@ -354,6 +358,7 @@ async function makeContacts(contacts) {
                         if (textContent.match(searchedCard)) {
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
+                            updateId = card[i].id;
                             cardTitle.innerText = title;
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
@@ -367,6 +372,7 @@ async function makeContacts(contacts) {
                         'FirstName': updateFName,
                         'LastName': updateLName,
                         'Phone': updateNum,
+                        'ID': updateId,
                         'UserID': getUserID()
                     });
                     let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
@@ -400,7 +406,7 @@ async function makeContacts(contacts) {
                     let textContent = cardTitle.textContent;
                     let str = fName + " " + lName;
                     if (textContent.match(str)) {
-                        updateId = i;
+                        updateId = card[i].id;
                         cards[i].remove();
                     }
                 }
