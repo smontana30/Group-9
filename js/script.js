@@ -324,7 +324,7 @@ async function makeContacts(contacts) {
 
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
-        cardDiv.setAttribute('id', el.id);
+        cardDiv.setAttribute('id', el.ID);
         // cardDiv.style.width = '14rem';
         // cardDiv.style.height = '10rem';
 
