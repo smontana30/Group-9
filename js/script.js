@@ -361,7 +361,7 @@ async function searchWithApi() {
 
 // used after creating a new contact to
 // create a card for the new contact
-async function getNewContact(str) {
+async function getNewContact(newCon) {
     
     const url = 'http://tinytelephonetime.ninja/api/get_contacts.php' + '?UserID=' + getUserID();
 
@@ -372,7 +372,8 @@ async function getNewContact(str) {
         .catch(_error => { console.log("Error with fetching Group9 API contacts.") });
     
     await contacts.results.forEach(el => {
-        if (str.toLowerCase().includes(filter)) {
+        str = el.FirstName + " " + el.LastName;
+        if (str.toLowerCase().includes(newCon)) {
             object.results.push(el);
         }
     });
