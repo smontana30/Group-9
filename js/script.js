@@ -497,6 +497,7 @@ async function searchWithApi() {
     await console.log("About to enter for each loop");
     await contacts.results.forEach(el => {
         console.log("Inside loop");
+        console.log(el);
         str = el.FirstName + " " + el.LastName;
         if (filter.includes(str.toLowerCase())) {
             console.log("Inside If");
