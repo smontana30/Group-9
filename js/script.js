@@ -499,6 +499,8 @@ async function searchWithApi() {
         if (filter.match(str.toLowerCase())) {
             object.results.add(el);
             filteredContacts.add(object);
+            console.log(object);
+            console.log(filteredContacts);
         }
     });
 
