@@ -27,7 +27,7 @@ function addContact() {
     } catch (error) {
         // If we get here, there was likely an issue with the API.
         // document.getElementById("error-tag").innerHTML = err.message;
-        console.error("Error:\n" + err)
+        console.error("Error:\n" + error)
     }
 
     let divBody = document.createElement("div");
@@ -216,7 +216,7 @@ async function getContactsWithSearch() {
     // If someone attempts to query an empty string, return all the contacts.
     if (searchBar.value == '') {
         alert("Error: Please search for a valid user");
-        getContacts();
+        //getContacts();
         return;
     }
     
@@ -373,7 +373,7 @@ async function makeContacts(contacts) {
                                     'ID': updateId,
                                     'UserID': getUserID()
                                 });
-                                console.log(payload);
+                        
                                 let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
                                 let xhr = new XMLHttpRequest();
                                 xhr.open("POST", url, false);
@@ -410,23 +410,23 @@ async function makeContacts(contacts) {
                     if (textContent.match(str)) {
                         updateId = cards[i].id;
                         cards[i].remove();
-                    }
-                }
 
-                try {
-                    let payload = JSON.stringify({
-                        'ID': updateId,
-                        'UserID': getUserID()
-                    });
-                    let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
-                    let xhr = new XMLHttpRequest();
-                    xhr.open("POST", url, false);
-                    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-                    xhr.send(payload);
-                } catch (error) {
-                    // If we get here, there was likely an issue with the API.
-                    // document.getElementById("error-tag").innerHTML = err.message;
-                    console.error("Error:\n" + err)
+                        try {
+                            let payload = JSON.stringify({
+                                'ID': updateId,
+                                'UserID': getUserID()
+                            });
+                            let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
+                            let xhr = new XMLHttpRequest();
+                            xhr.open("POST", url, false);
+                            xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                            xhr.send(payload);
+                        } catch (error) {
+                            // If we get here, there was likely an issue with the API.
+                            // document.getElementById("error-tag").innerHTML = err.message;
+                            console.error("Error:\n" + err)
+                        }
+                    }
                 }
             });
             // here will an event listner for click and send data to update card
@@ -485,6 +485,12 @@ async function searchWithApi() {
     let object = {"results":[]}
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
+
+    if (searchBar.value == '') {
+        alert("Error: Please search for a valid user");
+        //getContacts();
+        return;
+    }
 
     const url = 'http://tinytelephonetime.ninja/api/get_contacts.php' + '?UserID=' + getUserID();
 
