@@ -114,6 +114,10 @@ async function fetchContactsWithUrl(url) {
             .catch(_error => { console.log("Error with fetching PokeAPI contacts.") });
     }
 
+    if (currentLen > (contacts.results.length + 1)) {
+        currentLen = contacts.results.length;
+    }
+
     // Display contact cards.
     await makeContacts(contacts);
 }
@@ -122,7 +126,8 @@ async function makeContacts(contacts) {
     const data = document.cookie;
     const UserName = data.split(",");
     console.log(UserName);
-    document.getElementById('mySpan').innerHTML = "Welcome " + UserName[0] + " " + UserName[1];
+    const name = UserName[0].split("=");
+    document.getElementById('mySpan').innerHTML = "Welcome " + name[1];
 
     // getting out list element
     let div = document.getElementById('card');
