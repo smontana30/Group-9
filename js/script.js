@@ -30,13 +30,13 @@ function addContact() {
         // document.getElementById("error-tag").innerHTML = err.message;
         console.error("Error:\n" + error)
     }
-
+    currentLen++;
     getNewContact(firstName + " " + lastName);
 
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
-    // currentLen++;
+    
     // getContacts();
 }
 
