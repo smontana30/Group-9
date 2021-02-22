@@ -206,7 +206,7 @@ async function makeContacts(contacts) {
                         let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
                         let textContent = cardTitle.textContent;
                         let searchedCard = fName + " " + lName;
-                        if (textContent.match(searchedCard)) {
+                        if (textContent == searchedCard) {
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
                             updateId = cards[i].id;
@@ -243,7 +243,7 @@ async function makeContacts(contacts) {
     
                     // modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
                     // modalphoneUP.innerText = "Phone: " + updateNum;
-                    getContacts();
+                    await getContacts();
                 });
                 
 
