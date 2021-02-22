@@ -236,15 +236,15 @@ async function makeContacts(contacts) {
                             }
                         }
                     }
-
+                    let modalUp = document.getElementById('modal3');
+                    let modalnameUp = document.getElementById('fullName');
+                    let modalphoneUP = document.getElementById('phNumber');
+    
+                    modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
+                    modalphoneUP.innerText = "Phone: " + updateNum;
                     
                 });
-                let modalUp = document.getElementById('modal3');
-                let modalnameUp = document.getElementById('fullName');
-                let modalphoneUP = document.getElementById('phNumber');
-
-                modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
-                modalphoneUP.innerText = "Phone: " + updateNum;
+                
 
                 document.getElementById('updateFname').value = "";
                 document.getElementById('updateLast').value = "";
