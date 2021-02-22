@@ -366,6 +366,7 @@ async function searchWithApi() {
 async function getNewContact(newCon) {
     let contacts = null;
     let object = {"results":[]}
+    console.log("found contact")
 
     const url = 'http://tinytelephonetime.ninja/api/get_contacts.php' + '?UserID=' + getUserID();
 
