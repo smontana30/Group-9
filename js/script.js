@@ -187,9 +187,9 @@ async function makeContacts(contacts) {
             updateBtn.setAttribute('data-bs-toggle', "modal");
             updateBtn.setAttribute('data-bs-target', "#myModal2");
 
-            updateBtn.addEventListener('click', function() {
+            updateBtn.addEventListener('click', async function() {
                 let update = document.getElementById('updateBtn');
-                update.addEventListener('click', function() {
+                update.addEventListener('click', async function() {
                     let cards = document.getElementsByClassName("card");
                     // document.getElementById('updateFname').innerHTML = fName;
                     // document.getElementById('updateLast').innerHTML = lName;
