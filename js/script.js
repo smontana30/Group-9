@@ -245,7 +245,7 @@ async function makeContacts(contacts) {
 
                 modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
                 modalphoneUP.innerText = "Phone: " + updateNum;
-                
+
                 document.getElementById('updateFname').value = "";
                 document.getElementById('updateLast').value = "";
                 document.getElementById('updateNum').value = "";
@@ -413,8 +413,8 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    // if (userId < 0)
-    //     window.location.href = "login.html";
+    if (userId < 0)
+        window.location.href = "login.html";
 
     console.log("Fetched userId: " + userId);
     return userId;
