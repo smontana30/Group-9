@@ -191,9 +191,13 @@ async function makeContacts(contacts) {
                 let update = document.getElementById('updateBtn');
                 update.addEventListener('click', function() {
                     let cards = document.getElementsByClassName("card");
-                    let updateFName = document.getElementById('updateFname').value;
-                    let updateLName = document.getElementById('updateLast').value;
-                    let updateNum = document.getElementById('updateNum').value;
+                    // document.getElementById('updateFname').innerHTML = fName;
+                    // document.getElementById('updateLast').innerHTML = lName;
+                    // document.getElementById('updateNum').innerHTML = number;
+                    // let updateFName = document.getElementById('updateFname').value ;
+                    let updateFName = (document.getElementById('updateFname').value !== "") ? document.getElementById('updateFname').value : fName;
+                    let updateLName = (document.getElementById('updateLast').value !== "") ? document.getElementById('updateLast').value : lName;
+                    let updateNum = (document.getElementById('updateNum').value !== "") ? document.getElementById('updateNum').value : number;
                     
                     let updateId;
                     for (let i = 0; i < cards.length; i++) {
@@ -232,8 +236,16 @@ async function makeContacts(contacts) {
                             }
                         }
                     }
-                });
 
+                    
+                });
+                let modalUp = document.getElementById('modal3');
+                let modalnameUp = document.getElementById('fullName');
+                let modalphoneUP = document.getElementById('phNumber');
+
+                modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
+                modalphoneUP.innerText = "Phone: " + updateNum;
+                
                 document.getElementById('updateFname').value = "";
                 document.getElementById('updateLast').value = "";
                 document.getElementById('updateNum').value = "";
@@ -366,7 +378,6 @@ async function searchWithApi() {
 async function getNewContact(newCon) {
     let contacts = null;
     let object = {"results":[]}
-    console.log("found contact")
 
     const url = 'http://tinytelephonetime.ninja/api/get_contacts.php' + '?UserID=' + getUserID();
 
@@ -379,7 +390,6 @@ async function getNewContact(newCon) {
     await contacts.results.forEach(el => {
         str = el.FirstName + " " + el.LastName;
         if (str.toLowerCase().includes(newCon)) {
-            console.log("found contact")
             object.results.push(el);
         }
     });
