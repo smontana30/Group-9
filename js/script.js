@@ -31,13 +31,13 @@ function addContact() {
         console.error("Error:\n" + error)
     }
 
-    // getNewContact(firstName + " " + lastName);
+    getNewContact(firstName + " " + lastName);
 
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
-    currentLen++;
-    getContacts();
+    // currentLen++;
+    // getContacts();
 }
 
 // Function called to send a POST request to the API and display contact cards
@@ -378,6 +378,7 @@ async function getNewContact(newCon) {
     await contacts.results.forEach(el => {
         str = el.FirstName + " " + el.LastName;
         if (str.toLowerCase().includes(newCon)) {
+            console.log("found contact")
             object.results.push(el);
         }
     });
