@@ -2,7 +2,6 @@ let offset = 0; // For selecting previous/next couple of contacts.
 let id = 0;
 const length = 12; // Number of contacts to show on the screen.
 let currentLen = length;
-const url = 'http://tinytelephonetime.ninja/api/get_contacts.php';
 
 function addContact() {
     // // getting out list element
@@ -38,7 +37,7 @@ function addContact() {
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
     currentLen++;
-    fetchContactsWithUrl(url);
+    getContacts();
 }
 
 // Function called to send a POST request to the API and display contact cards
@@ -51,7 +50,7 @@ async function getContacts() {
     // - length: The number of contacts to return.
     // - offset: Number of contacts to skip in the array being returned.
 
-    const params = '?UserID=' + getUserID() + '&length=' + length + '&offset=' + offset;
+    const params = '?UserID=' + getUserID() + '&length=' + currentLen + '&offset=' + offset;
     fetchContactsWithUrl(url_online + params);
 }
 
@@ -291,8 +290,7 @@ async function makeContacts(contacts) {
 
 function showMore() {
     currentLen += 4;
-    const url = 'http://tinytelephonetime.ninja/api/get_contacts.php';
-    fetchContactsWithUrl(url);
+    getContacts();
     
 }
 
