@@ -1,6 +1,7 @@
 let offset = 0; // For selecting previous/next couple of contacts.
 let id = 0;
 const length = 12; // Number of contacts to show on the screen.
+let currentLen = length;
 
 function addContact() {
     // // getting out list element
@@ -35,6 +36,7 @@ function addContact() {
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
+    currentLen++;
 }
 
 // Function called to send a POST request to the API and display contact cards
@@ -95,7 +97,7 @@ async function getAllContactsWithSearch() {
 // the request to the Group9 Website API fails, attempt the PokeAPI.
 async function fetchContactsWithUrl(url) {
     let contacts = null;
-    const url_offline = 'https://pokeapi.co/api/v2/pokemon?limit=' + length + '&offset=' + offset;
+    const url_offline = 'https://pokeapi.co/api/v2/pokemon?limit=' + currentLen + '&offset=' + offset;
 
     // Assign contacts to the results of the url request.
     await fetch(url)
@@ -116,27 +118,21 @@ async function fetchContactsWithUrl(url) {
 }
 
 async function makeContacts(contacts) {
+
+    document.getElementById('mySpan').innerHTML = "Welcome " + document.cookie;
+
     // getting out list element
     let div = document.getElementById('card');
 
-    //console.log(contacts)
-        // creating list item and giving it bootstrap class
-    let flag = 0;
     
     contacts.results.forEach(el => {
-        //console.log(el);
-        // if (flag == 12)
-        //     return;
 
         let divBody = document.createElement("div");
         divBody.setAttribute('class', "card-body");
-
         let cardimg = document.createElement('img');
         cardimg.setAttribute('class', 'card-img-top');
-
         let cardTitle = document.createElement('h5');
         cardTitle.setAttribute('class', "card-title");
-
         let cardText = document.createElement('h6');
         cardText.setAttribute('class', 'card-text');
 
@@ -145,18 +141,12 @@ async function makeContacts(contacts) {
 
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
-        // let src = "/letters/png/" + firLetter + ".png";
-        // console.log(src);
         cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
-        // cardimg.style.backgroundImage = "url('../images/letters/png/ " + firLetter +".png')";
-        // cardimg.alt = 'Nothing'
         let lName = el.LastName == undefined ? "lastname" : el.LastName;
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
         // Changing the card ID to be the contact ID to allow for easier deletion and editing.
         id = el.ID == undefined ? id : el.ID;
-        // adding our input our list item
-
 
         // if we are searching for information already on the website we delete the info already
         // on it and replace it with a new card. this is to avoid having duplicate cards
@@ -177,9 +167,6 @@ async function makeContacts(contacts) {
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
         cardDiv.setAttribute('id', el.ID);
-        // cardDiv.style.width = '14rem';
-        // cardDiv.style.height = '10rem';
-
         cardDiv.addEventListener('click', function() {
             this.setAttribute('data-bs-toggle', 'modal');
             this.setAttribute('data-bs-target', '#myModal3');
@@ -247,10 +234,6 @@ async function makeContacts(contacts) {
 
             let deleteBtn = document.getElementById('modal3delete');
             deleteBtn.addEventListener('click', function() {
-                // let num = id.toString();
-                // console.log("id of card is: " + num);
-                // let card1 = document.getElementById('1');
-                // card1.remove();
                 let cards = document.getElementsByClassName("card");
                 let updateId = 0;
                 // search for fname lname to know which card to delete
@@ -280,28 +263,30 @@ async function makeContacts(contacts) {
                     }
                 }
             });
-            // here will an event listner for click and send data to update card
-            // will probaby send first and last name and phone number to update to search for 
-            // card to update. then use flag to let us know if we need to update the card.
 
         });
         
 
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
-        // divBody.appendChild(updateBtn);
-        // divBody.appendChild(deleteBtn);
 
         // adding our list item to our list
         cardDiv.appendChild(cardimg);
         cardDiv.appendChild(divBody);
         div.appendChild(cardDiv);
         
-        //console.log(cardDiv);
 
-        flag++;
         id++;
     });
+
+    console.log(currentLen);
+}
+
+function showMore() {
+    currentLen += 12;
+    const url = 'http://tinytelephonetime.ninja/api/get_contacts.php';
+    fetchContactsWithUrl(url);
+    
 }
 
 // searches only contacts on the screen
@@ -327,6 +312,13 @@ function search() {
             cardBody[i].style.display = "none";
         }
     }
+
+    searchBar.addEventListener("keydown", function(event) {
+        if (event.key == "Enter" || event.keycode == 13) {
+            console.log("enter has been pressed");
+            searchWithApi();
+        }
+    });
 }
 
 // searches through all contacts and loads cards for only the ones
@@ -402,8 +394,8 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
 
     console.log("Fetched userId: " + userId);
     return userId;

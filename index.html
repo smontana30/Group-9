@@ -14,9 +14,9 @@
 </head>
 
 <body onload="getContacts()">
-    <nav class="navbar navbar-light bg-light">
+    <nav onload="nav()" class="navbar navbar-light bg-light">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">Contact App</span>
+            <span onload="nav()" id="mySpan" class="navbar-brand mb-0 h1">Welcome</span>
             <button type="button" class="btn btn-secondary" onclick="doLogout()">Logout</button>
         </div>
     </nav>
@@ -130,7 +130,13 @@
             <div id="card">
 
             </div>
+
+            <button id="showMore" onclick="showMore()" type="button" class="btn btn-secondary" >Show More</button>
+
         </div>
+
+        
+        <button id="toTop" type="button" class="btn btn-secondary">Back to Top</button>
 
     </div>
 

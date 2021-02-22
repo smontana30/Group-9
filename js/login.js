@@ -42,7 +42,9 @@ function login()
     catch (err)
     {
         // If we get here, there was likely an issue with the API.
-        document.getElementById("error-tag").innerHTML = err.message;
+
+        document.getElementById("error-tag").innerHTML = 'Oh no! User could not be logged in. Please try again.';
+        document.getElementById("error-tag").style.color = 'white';
         console.error("Error:\n" + err);
     }
 }
