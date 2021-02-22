@@ -2,6 +2,7 @@ let offset = 0; // For selecting previous/next couple of contacts.
 let id = 0;
 const length = 12; // Number of contacts to show on the screen.
 let currentLen = length;
+const url = 'http://tinytelephonetime.ninja/api/get_contacts.php';
 
 function addContact() {
     // // getting out list element
@@ -31,12 +32,13 @@ function addContact() {
         console.error("Error:\n" + error)
     }
 
-    getNewContact(firstName + " " + lastName);
+    // getNewContact(firstName + " " + lastName);
 
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
     currentLen++;
+    fetchContactsWithUrl(url);
 }
 
 // Function called to send a POST request to the API and display contact cards
@@ -113,13 +115,18 @@ async function fetchContactsWithUrl(url) {
             .catch(_error => { console.log("Error with fetching PokeAPI contacts.") });
     }
 
+    if (currentLen > contacts.results.length) {
+        alert("Oh No! Looks like you don't have enough contacts to show more.");
+        currentLen -= 4;
+    }
+
     // Display contact cards.
     await makeContacts(contacts);
 }
 
 async function makeContacts(contacts) {
 
-    document.getElementById('mySpan').innerHTML = "Welcome " + document.cookie;
+    document.getElementById('mySpan').innerHTML = "Welcome " + document.cookie.FirstName + " " + document.cookie.LastName;
 
     // getting out list element
     let div = document.getElementById('card');
@@ -283,7 +290,7 @@ async function makeContacts(contacts) {
 }
 
 function showMore() {
-    currentLen += 12;
+    currentLen += 4;
     const url = 'http://tinytelephonetime.ninja/api/get_contacts.php';
     fetchContactsWithUrl(url);
     
