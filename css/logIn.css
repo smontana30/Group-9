@@ -22,7 +22,7 @@ body {
 }
 
 .links:hover {
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
@@ -54,7 +54,6 @@ body {
 
 #password {
     display: flex;
-
 }
 
 #logIn {
@@ -85,6 +84,11 @@ body {
     margin: 3%;
     text-align: center;
     width: 120px;
+}
+
+#error-tag {
+    color: white;
+    display: flex;
 }
 
 #signbtn {

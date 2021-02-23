@@ -31,7 +31,7 @@ body {
 }
 
 .links:hover {
-    color: white;
+    color: black;
     text-decoration: none;
 }
 
@@ -65,10 +65,23 @@ body {
     display: flex;
 }
 
+#error-tag {
+    color: white;
+    display: flex;
+}
+
 #logIn {
     align-items: center;
     display: grid;
     padding: 5%;
+}
+
+#backbtn {
+    font-size: 20px;
+    height: 40px;
+    margin: 3%;
+    text-align: center;
+    width: 120px;
 }
 
 .icon {
