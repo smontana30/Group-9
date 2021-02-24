@@ -31,7 +31,107 @@ function addContact() {
         console.error("Error:\n" + error)
     }
     currentLen++;
-    getNewContact(firstName + " " + lastName);
+    // getNewContact(firstName + " " + lastName);
+
+    id = el.ID == undefined ? id : el.ID;
+
+    let divBody = document.createElement("div");
+    divBody.setAttribute('class', "card-body");
+    divBody.setAttribute('id', "cardbody " + id);
+    let cardimg = document.createElement('img');
+    cardimg.setAttribute('class', 'card-img-top');
+    cardimg.setAttribute('id', "cardimg " + id);
+    let cardTitle = document.createElement('h5');
+    cardTitle.setAttribute('class', "card-title");
+    cardTitle.setAttribute('id', "cardtitle " + id);
+    let cardText = document.createElement('h6');
+    cardText.setAttribute('class', 'card-text');
+    cardText.setAttribute('id', "cardtext " + id);
+
+    // getting our input
+
+    // attempting to add image but it wasn't working and i got frustated 
+    let firLetter = firstName.toLowerCase().charAt(0);
+
+    cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
+
+    cardTitle.appendChild(document.createTextNode(firstName + " " + lastName));
+    cardText.appendChild(document.createTextNode(phoneNum));
+
+    let cardDiv = document.createElement("div");
+    cardDiv.setAttribute('class', "card");
+    cardDiv.setAttribute('id', el.ID);
+    // cardDiv.setAttribute('data-bs-toggle', 'modal');
+    // cardDiv.setAttribute('data-bs-target', '#myModal3');
+
+    // cardDiv.addEventListener('click', function() {
+    //     document.getElementById('fullName').innerText = fName + " " + lName;
+    //     document.getElementById('phNumber').innerText = number;
+    // })
+
+    let updateBtn = document.createElement('button');
+    updateBtn.innerHTML = "Update";
+    updateBtn.setAttribute('class', "btn btn-warning");
+    updateBtn.setAttribute('id', 'update ' + id)
+    updateBtn.setAttribute('data-bs-toggle', "modal");
+    updateBtn.setAttribute('data-bs-target', "#myModal2");
+
+    updateBtn.addEventListener('click', function() {
+        let currId = this.id.split(" ");
+        let contactId = document.getElementsByClassName('updateContactId');
+        document.getElementById('saveUp').setAttribute('class', 'btn btn-secondary')
+        contactId[0].setAttribute('id', 'modal ' + currId[1]);
+
+    })
+
+    let deleteBtn = document.createElement('button');
+    deleteBtn.setAttribute('class', "btn btn-danger");
+    deleteBtn.setAttribute('id', "delete " + id);
+    deleteBtn.innerText = "Delete";
+    deleteBtn.addEventListener('click', function() {
+        let cards = document.getElementsByClassName("card");
+        let updateId = 0;
+        // search for fname lname to know which card to delete
+        for (let i = 0; i < cards.length; i++) {
+            let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+            let textContent = cardTitle.textContent;
+            let str = fName + " " + lName;
+            if (textContent.match(str)) {
+                updateId = cards[i].id;
+                cards[i].remove();
+
+                try {
+                    let payload = JSON.stringify({
+                        'ID': updateId,
+                        'UserID': getUserID()
+                    });
+                    let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", url, false);
+                    xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                    xhr.send(payload);
+                } catch (error) {
+                    // If we get here, there was likely an issue with the API.
+                    // document.getElementById("error-tag").innerHTML = err.message;
+                    console.error("Error:\n" + err)
+                }
+            }
+        }
+    });
+
+
+    divBody.appendChild(cardTitle);
+    divBody.appendChild(cardText);
+    divBody.appendChild(updateBtn);
+    divBody.appendChild(deleteBtn);
+
+    // adding our list item to our list
+    cardDiv.appendChild(cardimg);
+    cardDiv.appendChild(divBody);
+    div.appendChild(cardDiv);
+
+
+    id++;
 
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
@@ -134,7 +234,6 @@ async function makeContacts(contacts) {
     // getting out list element
     let div = document.getElementById('card');
 
-
     contacts.results.forEach(el => {
 
         id = el.ID == undefined ? id : el.ID;
@@ -164,20 +263,6 @@ async function makeContacts(contacts) {
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
         // Changing the card ID to be the contact ID to allow for easier deletion and editing.
-
-
-        // if we are searching for information already on the website we delete the info already
-        // on it and replace it with a new card. this is to avoid having duplicate cards
-        let cards = document.getElementsByClassName("card");
-        // search for fname lname to know which card to delete
-        for (let i = 0; i < cards.length; i++) {
-            let cardTitle = cards[i].getElementsByClassName('card-title')[0];
-            let textContent = cardTitle.textContent;
-            let str = fName + " " + lName;
-            if (textContent.match(str)) {
-                cards[i].remove();
-            }
-        }
 
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
         cardText.appendChild(document.createTextNode(number));
@@ -253,7 +338,6 @@ async function makeContacts(contacts) {
         cardDiv.appendChild(cardimg);
         cardDiv.appendChild(divBody);
         div.appendChild(cardDiv);
-
 
         id++;
     });
