@@ -14,9 +14,9 @@ function addContact() {
     let phoneNum = document.getElementById('phone-number').value;
 
     // if any of these input values are empty initalize with default values
-    firstName = (firstName === "") ? "Felix" : firstName;
-    lastName = (lastName === "") ? "Sanchez" : lastName;
-    phoneNum = (phoneNum === "") ? "3057650427" : phoneNum;
+    firstName = (firstName === "") ? "Satoru" : firstName;
+    lastName = (lastName === "") ? "Gojo" : lastName;
+    phoneNum = (phoneNum === "") ? "305-765-0427" : phoneNum;
 
     try {
         let payload = JSON.stringify({
