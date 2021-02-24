@@ -37,6 +37,11 @@ function addContact() {
     }
     currentLen++;
     getNewContact(firstName + " " + lastName);
+
+    document.getElementById("firstName").value = "";
+    document.getElementById("lastName").value = "";
+    document.getElementById("phone-number").value = "";
+
 }
 
 // Function called to send a POST request to the API and display contact cards
