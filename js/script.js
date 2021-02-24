@@ -48,12 +48,30 @@ function addContact() {
     cardText.setAttribute('class', 'card-text');
     cardText.setAttribute('id', "cardtext " + id);
 
-    // getting our input
+    // getting our inputs
+
 
     // attempting to add image but it wasn't working and i got frustated 
     let firLetter = firstName.toLowerCase().charAt(0);
 
     cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
+
+
+    // Changing the card ID to be the contact ID to allow for easier deletion and editing.
+
+
+    // if we are searching for information already on the website we delete the info already
+    // on it and replace it with a new card. this is to avoid having duplicate cards
+    let cards = document.getElementsByClassName("card");
+    // search for fname lname to know which card to delete
+    for (let i = 0; i < cards.length; i++) {
+        let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+        let textContent = cardTitle.textContent;
+        let str = firstName + " " + lastName;
+        if (textContent.match(str)) {
+            cards[i].remove();
+        }
+    }
 
     cardTitle.appendChild(document.createTextNode(firstName + " " + lastName));
     cardText.appendChild(document.createTextNode(phoneNum));
@@ -95,7 +113,7 @@ function addContact() {
         for (let i = 0; i < cards.length; i++) {
             let cardTitle = cards[i].getElementsByClassName('card-title')[0];
             let textContent = cardTitle.textContent;
-            let str = fName + " " + lName;
+            let str = firstName + " " + lastName;
             if (textContent.match(str)) {
                 updateId = cards[i].id;
                 cards[i].remove();
@@ -234,6 +252,7 @@ async function makeContacts(contacts) {
     // getting out list element
     let div = document.getElementById('card');
 
+
     contacts.results.forEach(el => {
 
         id = el.ID == undefined ? id : el.ID;
@@ -263,6 +282,20 @@ async function makeContacts(contacts) {
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
         // Changing the card ID to be the contact ID to allow for easier deletion and editing.
+
+
+        // if we are searching for information already on the website we delete the info already
+        // on it and replace it with a new card. this is to avoid having duplicate cards
+        let cards = document.getElementsByClassName("card");
+        // search for fname lname to know which card to delete
+        for (let i = 0; i < cards.length; i++) {
+            let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+            let textContent = cardTitle.textContent;
+            let str = fName + " " + lName;
+            if (textContent.match(str)) {
+                cards[i].remove();
+            }
+        }
 
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
         cardText.appendChild(document.createTextNode(number));
