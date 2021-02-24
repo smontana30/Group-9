@@ -183,14 +183,13 @@ async function makeContacts(contacts) {
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
         cardDiv.setAttribute('id', el.ID);
-        cardDiv.setAttribute('data-bs-toggle', 'modal');
-        cardDiv.setAttribute('data-bs-target', '#myModal3');
+        // cardDiv.setAttribute('data-bs-toggle', 'modal');
+        // cardDiv.setAttribute('data-bs-target', '#myModal3');
 
-        cardDiv.addEventListener('click', function() {
-            document.getElementById('fullName').innerText = fName + " " + lName;
-            document.getElementById('phNumber').innerText = number;
-
-        })
+        // cardDiv.addEventListener('click', function() {
+        //     document.getElementById('fullName').innerText = fName + " " + lName;
+        //     document.getElementById('phNumber').innerText = number;
+        // })
 
         let updateBtn = document.createElement('button');
         updateBtn.innerHTML = "Update";
