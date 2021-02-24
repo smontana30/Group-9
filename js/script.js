@@ -161,7 +161,8 @@ async function makeContacts(contacts) {
         let randoSprite = Math.floor(Math.random() * (649 - 1) + 1);
         console.log(Math.random());
         // cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
-        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/images/pokeSprites/spritesFolder/Pokemon/BW/" + divBody.id.split(" ")[1] + ".png";
+
+        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/images/pokeSprites/spritesFolder/Pokemon/BW/" + randoSprite + ".png";
         let lName = el.LastName == undefined ? "lastname" : el.LastName;
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
