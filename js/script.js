@@ -198,10 +198,9 @@ async function makeContacts(contacts) {
                     // document.getElementById('updateLast').innerHTML = lName;
                     // document.getElementById('updateNum').innerHTML = number;
                     // let updateFName = document.getElementById('updateFname').value ;
-                    let updateFName = (document.getElementById('updateFname').value != "") ? document.getElementById('updateFname').value : fName;
-                    let updateLName = (document.getElementById('updateLast').value != "") ? document.getElementById('updateLast').value : lName;
-                    let updateNum = (document.getElementById('updateNum').value != "") ? document.getElementById('updateNum').value : number;
-
+                    let updateFName = document.getElementById('updateFname').value;
+                    let updateLName = document.getElementById('updateLast').value;
+                    let updateNum = document.getElementById('updateNum').value;
                     let updateId;
                     for (let i = 0; i < cards.length; i++) {
                         console.log(cards[i]);
@@ -215,6 +214,13 @@ async function makeContacts(contacts) {
                         if (searchedCard.toLowerCase().match(textContent.toLowerCase())) {
                             console.log("before change")
                             console.log(cards[i]);
+                            if (updateLName == undefined) {
+                                updateLName = lName;
+                            } else if (updateFName == undefined) {
+                                updateFName = fName;
+                            } else if (updateNum == undefined) {
+                                updateNum = number;
+                            }
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
                             updateId = cards[i].id;
