@@ -37,7 +37,8 @@ body {
 
 .card-text {
     align-items: center;
-    font-size: 18px;
+    color: #807c7c;
+    font-size: 20px;
 }
 
 #card button {

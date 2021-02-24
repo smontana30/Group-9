@@ -443,8 +443,8 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
 
     console.log("Fetched userId: " + userId);
     return userId;
