@@ -162,7 +162,7 @@ async function makeContacts(contacts) {
         console.log(Math.random());
         // cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
 
-        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/images/pokeSprites/spritesFolder/Pokemon/BW/" + randoSprite + ".png";
+        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/images/pokeSprites/spritesFolder/Pokemon/BW/" + divBody.id.split(" ")[1] + ".png";
         let lName = el.LastName == undefined ? "lastname" : el.LastName;
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
