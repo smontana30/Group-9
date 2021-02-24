@@ -179,6 +179,8 @@ async function makeContacts(contacts) {
         cardDiv.setAttribute('data-bs-target', '#myModal3');
 
         cardDiv.addEventListener('click', function(e) {
+            console.log("on card");
+            console.log(this);
 
             let modal = document.getElementById('modal3');
             let modalname = document.getElementById('fullName');
@@ -197,9 +199,9 @@ async function makeContacts(contacts) {
                     // document.getElementById('updateLast').innerHTML = lName;
                     // document.getElementById('updateNum').innerHTML = number;
                     // let updateFName = document.getElementById('updateFname').value ;
-                    let updateFName = (document.getElementById('updateFname').value !== "") ? document.getElementById('updateFname').value : fName;
-                    let updateLName = (document.getElementById('updateLast').value !== "") ? document.getElementById('updateLast').value : lName;
-                    let updateNum = (document.getElementById('updateNum').value !== "") ? document.getElementById('updateNum').value : number;
+                    let updateFName = (document.getElementById('updateFname').value != "") ? document.getElementById('updateFname').value : fName;
+                    let updateLName = (document.getElementById('updateLast').value != "") ? document.getElementById('updateLast').value : lName;
+                    let updateNum = (document.getElementById('updateNum').value != "") ? document.getElementById('updateNum').value : number;
 
                     let updateId;
                     for (let i = 0; i < cards.length; i++) {
@@ -209,6 +211,8 @@ async function makeContacts(contacts) {
                         let textContent = cardTitle.textContent;
                         let searchedCard = fName + " " + lName;
                         if (searchedCard.match(textContent)) {
+                            console.log("before change")
+                            console.log(cards[i]);
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
                             updateId = cards[i].id;
@@ -216,7 +220,11 @@ async function makeContacts(contacts) {
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
                             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
-
+                            console.log("id:" + updateId);
+                            console.log("after")
+                            console.log(cards[i]);
+                            console.log("searched Card " + searchedCard);
+                            console.log("text Content " + textContent)
                             try {
                                 let payload = JSON.stringify({
                                     'FirstName': updateFName,
@@ -250,7 +258,6 @@ async function makeContacts(contacts) {
                     // modalphoneUP.innerText = "Phone: " + updateNum;
                     await getContacts();
                 });
-
 
             });
 
