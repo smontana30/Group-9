@@ -202,6 +202,9 @@ async function makeContacts(contacts) {
                     let updateLName = document.getElementById('updateLast').value;
                     let updateNum = document.getElementById('updateNum').value;
                     let updateId;
+                    console.log(updateFName);
+                    console.log(updateLName);
+                    console.log(updateNum);
                     for (let i = 0; i < cards.length; i++) {
                         console.log(cards[i]);
                         let cardTitle = cards[i].getElementsByClassName('card-title')[0];
@@ -210,7 +213,10 @@ async function makeContacts(contacts) {
                         let textContent = cardTitle.textContent;
                         let searchedCard = fName + " " + lName;
                         console.log("searched Card " + searchedCard);
-                        console.log("text Content " + textContent)
+                        console.log("text Content " + textContent);
+                        console.log(updateFName);
+                        console.log(updateLName);
+                        console.log(updateNum);
                         if (searchedCard.toLowerCase().match(textContent.toLowerCase())) {
                             console.log("before change")
                             console.log(cards[i]);
