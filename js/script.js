@@ -1,5 +1,5 @@
 let offset = 0; // For selecting previous/next couple of contacts.
-let id = 0;
+let id = 1;
 const length = 12; // Number of contacts to show on the screen.
 let currentLen = length;
 
@@ -122,6 +122,9 @@ async function fetchContactsWithUrl(url) {
     await makeContacts(contacts);
 }
 
+
+
+
 async function makeContacts(contacts) {
     const data = document.cookie;
     const UserName = data.split(",");
@@ -134,14 +137,20 @@ async function makeContacts(contacts) {
 
     contacts.results.forEach(el => {
 
+        id = el.ID == undefined ? id : el.ID;
+
         let divBody = document.createElement("div");
         divBody.setAttribute('class', "card-body");
+        divBody.setAttribute('id', "cardbody " + id);
         let cardimg = document.createElement('img');
         cardimg.setAttribute('class', 'card-img-top');
+        cardimg.setAttribute('id', "cardimg " + id);
         let cardTitle = document.createElement('h5');
         cardTitle.setAttribute('class', "card-title");
+        cardTitle.setAttribute('id', "cardtitle " + id);
         let cardText = document.createElement('h6');
         cardText.setAttribute('class', 'card-text');
+        cardText.setAttribute('id', "cardtext " + id);
 
         // getting our inputs
         let fName = el.name == undefined ? el.FirstName : el.name;
@@ -153,7 +162,7 @@ async function makeContacts(contacts) {
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
         // Changing the card ID to be the contact ID to allow for easier deletion and editing.
-        id = el.ID == undefined ? id : el.ID;
+
 
         // if we are searching for information already on the website we delete the info already
         // on it and replace it with a new card. this is to avoid having duplicate cards
@@ -174,141 +183,280 @@ async function makeContacts(contacts) {
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
         cardDiv.setAttribute('id', el.ID);
-        cardDiv.setAttribute('data-bs-toggle', 'modal');
-        cardDiv.setAttribute('data-bs-target', '#myModal3');
+        // cardDiv.setAttribute('data-bs-toggle', 'modal');
+        // cardDiv.setAttribute('data-bs-target', '#myModal3');
 
-        cardDiv.addEventListener('click', function(e) {
-            console.log("on card");
-            console.log(this);
+        let updateBtn = document.createElement('button');
+        updateBtn.innerHTML = "Update";
+        updateBtn.setAttribute('class', "btn btn-secondary");
+        updateBtn.setAttribute('id', 'update ' + id)
+        updateBtn.setAttribute('data-bs-toggle', "modal");
+        updateBtn.setAttribute('data-bs-target', "#myModal2");
 
-            let modal = document.getElementById('modal3');
-            let modalname = document.getElementById('fullName');
-            let modalphone = document.getElementById('phNumber');
-            modalname.textContent = "Name: " + fName + " " + lName;
-            modalphone.innerText = "Phone: " + number;
-            let updateBtn = document.getElementById('modal3button');
-            updateBtn.setAttribute('data-bs-toggle', "modal");
-            updateBtn.setAttribute('data-bs-target', "#myModal2");
+        updateBtn.addEventListener('click', function() {
+            console.log(this.id);
+            let currId = this.id.split(" ");
+            let d = document.getElementsByClassName('updateContactId');
+            console.log(d);
+            d[0].setAttribute('id', 'modal ' + currId[1]);
 
-            updateBtn.addEventListener('click', async function() {
-                let update = document.getElementById('updateBtn');
-                update.addEventListener('click', async function() {
-                    let cards = document.getElementsByClassName("card");
-                    // document.getElementById('updateFname').innerHTML = fName;
-                    // document.getElementById('updateLast').innerHTML = lName;
-                    // document.getElementById('updateNum').innerHTML = number;
-                    // let updateFName = document.getElementById('updateFname').value ;
-                    let updateFName = document.getElementById('updateFname').value;
-                    let updateLName = document.getElementById('updateLast').value;
-                    let updateNum = document.getElementById('updateNum').value;
-                    let updateId;
-                    console.log(updateFName);
-                    console.log(updateLName);
-                    console.log(updateNum);
-                    for (let i = 0; i < cards.length; i++) {
-                        console.log(cards[i]);
-                        let cardTitle = cards[i].getElementsByClassName('card-title')[0];
-                        let cardText = cards[i].getElementsByClassName('card-text')[0];
-                        let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
-                        let textContent = cardTitle.textContent;
-                        let searchedCard = fName + " " + lName;
-                        console.log("searched Card " + searchedCard);
-                        console.log("text Content " + textContent);
-                        console.log(updateFName);
-                        console.log(updateLName);
-                        console.log(updateNum);
-                        if (searchedCard.toLowerCase().match(textContent.toLowerCase())) {
-                            console.log("before change")
-                            console.log(cards[i]);
+        })
 
-                            let title = updateFName + " " + updateLName;
-                            let text = updateNum;
-                            updateId = cards[i].id;
-                            cardTitle.innerText = title;
-                            cardText.innerText = text;
-                            let letter = updateFName.toLowerCase().charAt(0);
-                            cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
-                            console.log("id:" + updateId);
-                            console.log("after")
-                            console.log(cards[i]);
-                            console.log("updated values");
-                            console.log(updateFName);
-                            console.log(updateLName);
-                            console.log(updateNum);
+        let saveChanges = document.getElementById("saveUp");
 
-                            try {
-                                let payload = JSON.stringify({
-                                    'FirstName': updateFName,
-                                    'LastName': updateLName,
-                                    'Phone': updateNum,
-                                    'ID': updateId,
-                                    'UserID': getUserID()
-                                });
 
-                                let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
-                                let xhr = new XMLHttpRequest();
-                                xhr.open("POST", url, false);
-                                xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-                                xhr.send(payload);
-                            } catch (error) {
-                                // If we get here, there was likely an issue with the API.
-                                // document.getElementById("error-tag").innerHTML = err.message;
-                                console.error("Error:\n" + error)
-                            }
-                        }
-                    }
 
-                    // let modalUp = document.getElementById('modal3');
-                    // let modalnameUp = document.getElementById('fullName');
-                    // let modalphoneUP = document.getElementById('phNumber');
-                    document.getElementById('updateFname').value = "";
-                    document.getElementById('updateLast').value = "";
-                    document.getElementById('updateNum').value = "";
+        // updateBtn.addEventListener('click', async function() {
+        //     let update = document.getElementById('updateBtn');
+        // update.addEventListener('click', async function() {
+        //     let cards = document.getElementsByClassName("card");
+        //     // document.getElementById('updateFname').innerHTML = fName;
+        //     // document.getElementById('updateLast').innerHTML = lName;
+        //     // document.getElementById('updateNum').innerHTML = number;
+        //     // let updateFName = document.getElementById('updateFname').value ;
+        //     let updateFName = document.getElementById('updateFname').value;
+        //     let updateLName = document.getElementById('updateLast').value;
+        //     let updateNum = document.getElementById('updateNum').value;
+        //     let updateId;
+        //     console.log(updateFName);
+        //     console.log(updateLName);
+        //     console.log(updateNum);
+        //     for (let i = 0; i < cards.length; i++) {
+        //         console.log(cards[i]);
+        //         let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+        //         let cardText = cards[i].getElementsByClassName('card-text')[0];
+        //         let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
+        //         let textContent = cardTitle.textContent;
+        //         let searchedCard = fName + " " + lName;
+        //         console.log("searched Card " + searchedCard);
+        //         console.log("text Content " + textContent);
+        //         console.log(updateFName);
+        //         console.log(updateLName);
+        //         console.log(updateNum);
+        //         if (searchedCard.toLowerCase().match(textContent.toLowerCase())) {
+        //             console.log("before change")
+        //             console.log(cards[i]);
 
-                    // modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
-                    // modalphoneUP.innerText = "Phone: " + updateNum;
-                    // await getContacts();
-                });
+        //             let title = updateFName + " " + updateLName;
+        //             let text = updateNum;
+        //             updateId = cards[i].id;
+        //             cardTitle.innerText = title;
+        //             cardText.innerText = text;
+        //             let letter = updateFName.toLowerCase().charAt(0);
+        //             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
+        //             console.log("id:" + updateId);
+        //             console.log("after")
+        //             console.log(cards[i]);
+        //             console.log("updated values");
+        //             console.log(updateFName);
+        //             console.log(updateLName);
+        //             console.log(updateNum);
 
-            });
+        //             try {
+        //                 let payload = JSON.stringify({
+        //                     'FirstName': updateFName,
+        //                     'LastName': updateLName,
+        //                     'Phone': updateNum,
+        //                     'ID': updateId,
+        //                     'UserID': getUserID()
+        //                 });
 
-            let deleteBtn = document.getElementById('modal3delete');
-            deleteBtn.addEventListener('click', function() {
-                let cards = document.getElementsByClassName("card");
-                let updateId = 0;
-                // search for fname lname to know which card to delete
-                for (let i = 0; i < cards.length; i++) {
-                    let cardTitle = cards[i].getElementsByClassName('card-title')[0];
-                    let textContent = cardTitle.textContent;
-                    let str = fName + " " + lName;
-                    if (textContent.match(str)) {
-                        updateId = cards[i].id;
-                        cards[i].remove();
+        //                 let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
+        //                 let xhr = new XMLHttpRequest();
+        //                 xhr.open("POST", url, false);
+        //                 xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+        //                 xhr.send(payload);
+        //             } catch (error) {
+        //                 // If we get here, there was likely an issue with the API.
+        //                 // document.getElementById("error-tag").innerHTML = err.message;
+        //                 console.error("Error:\n" + error)
+        //             }
+        //         }
+        //     }
 
-                        try {
-                            let payload = JSON.stringify({
-                                'ID': updateId,
-                                'UserID': getUserID()
-                            });
-                            let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
-                            let xhr = new XMLHttpRequest();
-                            xhr.open("POST", url, false);
-                            xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
-                            xhr.send(payload);
-                        } catch (error) {
-                            // If we get here, there was likely an issue with the API.
-                            // document.getElementById("error-tag").innerHTML = err.message;
-                            console.error("Error:\n" + err)
-                        }
+        //     // let modalUp = document.getElementById('modal3');
+        //     // let modalnameUp = document.getElementById('fullName');
+        //     // let modalphoneUP = document.getElementById('phNumber');
+        //     document.getElementById('updateFname').value = "";
+        //     document.getElementById('updateLast').value = "";
+        //     document.getElementById('updateNum').value = "";
+
+        //     // modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
+        //     // modalphoneUP.innerText = "Phone: " + updateNum;
+        //     // await getContacts();
+        // });
+
+        // });
+
+        let deleteBtn = document.createElement('button');
+        deleteBtn.setAttribute('class', "btn btn-secondary");
+        deleteBtn.setAttribute('id', "delete " + id);
+        deleteBtn.innerText = "Delete";
+        deleteBtn.addEventListener('click', function() {
+            let cards = document.getElementsByClassName("card");
+            let updateId = 0;
+            // search for fname lname to know which card to delete
+            for (let i = 0; i < cards.length; i++) {
+                let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+                let textContent = cardTitle.textContent;
+                let str = fName + " " + lName;
+                if (textContent.match(str)) {
+                    updateId = cards[i].id;
+                    cards[i].remove();
+
+                    try {
+                        let payload = JSON.stringify({
+                            'ID': updateId,
+                            'UserID': getUserID()
+                        });
+                        let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
+                        let xhr = new XMLHttpRequest();
+                        xhr.open("POST", url, false);
+                        xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+                        xhr.send(payload);
+                    } catch (error) {
+                        // If we get here, there was likely an issue with the API.
+                        // document.getElementById("error-tag").innerHTML = err.message;
+                        console.error("Error:\n" + err)
                     }
                 }
-            });
-
+            }
         });
+
+        // cardDiv.addEventListener('click', function(e) {
+        //     console.log("on card");
+        //     console.log(this);
+
+        //     let modal = document.getElementById('modal3');
+        //     let modalname = document.getElementById('fullName');
+        //     let modalphone = document.getElementById('phNumber');
+        //     modalname.textContent = "Name: " + fName + " " + lName;
+        //     modalphone.innerText = "Phone: " + number;
+        //     let updateBtn = document.getElementById('modal3button');
+        //     updateBtn.setAttribute('data-bs-toggle', "modal");
+        //     updateBtn.setAttribute('data-bs-target', "#myModal2");
+
+        //     updateBtn.addEventListener('click', async function() {
+        //         let update = document.getElementById('updateBtn');
+        //         update.addEventListener('click', async function() {
+        //             let cards = document.getElementsByClassName("card");
+        //             // document.getElementById('updateFname').innerHTML = fName;
+        //             // document.getElementById('updateLast').innerHTML = lName;
+        //             // document.getElementById('updateNum').innerHTML = number;
+        //             // let updateFName = document.getElementById('updateFname').value ;
+        //             let updateFName = document.getElementById('updateFname').value;
+        //             let updateLName = document.getElementById('updateLast').value;
+        //             let updateNum = document.getElementById('updateNum').value;
+        //             let updateId;
+        //             console.log(updateFName);
+        //             console.log(updateLName);
+        //             console.log(updateNum);
+        //             for (let i = 0; i < cards.length; i++) {
+        //                 console.log(cards[i]);
+        //                 let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+        //                 let cardText = cards[i].getElementsByClassName('card-text')[0];
+        //                 let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
+        //                 let textContent = cardTitle.textContent;
+        //                 let searchedCard = fName + " " + lName;
+        //                 console.log("searched Card " + searchedCard);
+        //                 console.log("text Content " + textContent);
+        //                 console.log(updateFName);
+        //                 console.log(updateLName);
+        //                 console.log(updateNum);
+        //                 if (searchedCard.toLowerCase().match(textContent.toLowerCase())) {
+        //                     console.log("before change")
+        //                     console.log(cards[i]);
+
+        //                     let title = updateFName + " " + updateLName;
+        //                     let text = updateNum;
+        //                     updateId = cards[i].id;
+        //                     cardTitle.innerText = title;
+        //                     cardText.innerText = text;
+        //                     let letter = updateFName.toLowerCase().charAt(0);
+        //                     cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
+        //                     console.log("id:" + updateId);
+        //                     console.log("after")
+        //                     console.log(cards[i]);
+        //                     console.log("updated values");
+        //                     console.log(updateFName);
+        //                     console.log(updateLName);
+        //                     console.log(updateNum);
+
+        //                     try {
+        //                         let payload = JSON.stringify({
+        //                             'FirstName': updateFName,
+        //                             'LastName': updateLName,
+        //                             'Phone': updateNum,
+        //                             'ID': updateId,
+        //                             'UserID': getUserID()
+        //                         });
+
+        //                         let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
+        //                         let xhr = new XMLHttpRequest();
+        //                         xhr.open("POST", url, false);
+        //                         xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+        //                         xhr.send(payload);
+        //                     } catch (error) {
+        //                         // If we get here, there was likely an issue with the API.
+        //                         // document.getElementById("error-tag").innerHTML = err.message;
+        //                         console.error("Error:\n" + error)
+        //                     }
+        //                 }
+        //             }
+
+        //             // let modalUp = document.getElementById('modal3');
+        //             // let modalnameUp = document.getElementById('fullName');
+        //             // let modalphoneUP = document.getElementById('phNumber');
+        //             document.getElementById('updateFname').value = "";
+        //             document.getElementById('updateLast').value = "";
+        //             document.getElementById('updateNum').value = "";
+
+        //             // modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
+        //             // modalphoneUP.innerText = "Phone: " + updateNum;
+        //             // await getContacts();
+        //         });
+
+        //     });
+
+        //     let deleteBtn = document.getElementById('modal3delete');
+        //     deleteBtn.addEventListener('click', function() {
+        //         let cards = document.getElementsByClassName("card");
+        //         let updateId = 0;
+        //         // search for fname lname to know which card to delete
+        //         for (let i = 0; i < cards.length; i++) {
+        //             let cardTitle = cards[i].getElementsByClassName('card-title')[0];
+        //             let textContent = cardTitle.textContent;
+        //             let str = fName + " " + lName;
+        //             if (textContent.match(str)) {
+        //                 updateId = cards[i].id;
+        //                 cards[i].remove();
+
+        //                 try {
+        //                     let payload = JSON.stringify({
+        //                         'ID': updateId,
+        //                         'UserID': getUserID()
+        //                     });
+        //                     let url = "http://tinytelephonetime.ninja/api/delete_contact.php";
+        //                     let xhr = new XMLHttpRequest();
+        //                     xhr.open("POST", url, false);
+        //                     xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+        //                     xhr.send(payload);
+        //                 } catch (error) {
+        //                     // If we get here, there was likely an issue with the API.
+        //                     // document.getElementById("error-tag").innerHTML = err.message;
+        //                     console.error("Error:\n" + err)
+        //                 }
+        //             }
+        //         }
+        //     });
+
+        // });
 
 
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
+        divBody.appendChild(updateBtn);
+        divBody.appendChild(deleteBtn);
 
         // adding our list item to our list
         cardDiv.appendChild(cardimg);
@@ -319,7 +467,43 @@ async function makeContacts(contacts) {
         id++;
     });
 
-    console.log(currentLen);
+}
+
+function updateCard() {
+    // console.log("id passed in " + id);
+    let d = document.getElementsByClassName('updateContactId');
+    let modalId = d[0].id.split(" ");
+    modalId = modalId[1];
+    console.log(modalId);
+
+    let name = document.getElementById("updateFname").value;
+    let lastName = document.getElementById("updateLast").value;
+    let number = document.getElementById("updateNum").value;
+
+    let title = document.getElementById('cardtitle ' + modalId);
+    let img = document.getElementById('cardimg ' + modalId);
+    let text = document.getElementById('cardtext ' + modalId);
+
+    console.log('title ');
+    console.log(title.innerText);
+    console.log("img ");
+    console.log(img);
+    console.log('text');
+    console.log(text)
+
+    name = (name === "") ? title.innerText.split(' ')[0] : name;
+    lastName = (lastName === "") ? title.innerText.split(' ')[1] : lastName;
+    number = (number === "") ? text.innerText : number;
+
+    let firstLetter = name.charAt(0).toLowerCase();
+
+    document.getElementById('cardimg ' + modalId).src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firstLetter + ".png";
+    title.innerText = name + " " + lastName;
+    text.innerText = number;
+
+    document.getElementById("updateFname").value = "";
+    document.getElementById("updateLast").value = "";
+    document.getElementById("updateNum").value = "";
 }
 
 function showMore() {
@@ -443,8 +627,8 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
 
     console.log("Fetched userId: " + userId);
     return userId;

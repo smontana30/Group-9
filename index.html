@@ -73,7 +73,7 @@
                             Update Contact
                         </div>
                         <div class="modal-body">
-                            <form action="post">
+                            <form action="post" onsubmit="updateCard()">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
                                     <input id="updateFname" type="text" class="form-control" autocomplete="on">
@@ -88,10 +88,11 @@
                                     <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
                                     <input id="updateNum" type="text" class="form-control" autocomplete="on">
                                 </div>
+                                <span class="updateContactId" hidden="true"></span>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button id="updateBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <button id="saveUp" onclick="updateCard()" type="button" data-bs-dismiss="modal">
                                 Save Updates
                             </button>
                         </div>
@@ -115,10 +116,10 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-secondary" id="modal3button" type="button" data-bs-dismiss="modal">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
                                 Update
                             </button>
-                            <button id="modal3delete" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                 Delete
                             </button>
                         </div>
@@ -140,7 +141,6 @@
         <div id="more">
             <button id="showMore" onclick="showMore()" type="button" class="btn btn-secondary">
                 Show more
-                
             </button>
         </div>
     </div>
