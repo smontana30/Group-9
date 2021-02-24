@@ -125,7 +125,6 @@ async function fetchContactsWithUrl(url) {
 async function makeContacts(contacts) {
     const data = document.cookie;
     const UserName = data.split(",");
-    console.log(UserName);
     const name = UserName[0].split("=");
     document.getElementById('mySpan').innerHTML = "Welcome " + name[1];
 
@@ -205,12 +204,15 @@ async function makeContacts(contacts) {
 
                     let updateId;
                     for (let i = 0; i < cards.length; i++) {
+                        console.log(cards[i]);
                         let cardTitle = cards[i].getElementsByClassName('card-title')[0];
                         let cardText = cards[i].getElementsByClassName('card-text')[0];
                         let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
                         let textContent = cardTitle.textContent;
                         let searchedCard = fName + " " + lName;
-                        if (searchedCard.match(textContent)) {
+                        console.log("searched Card " + searchedCard);
+                        console.log("text Content " + textContent)
+                        if (searchedCard.toLowerCase().match(textContent.toLowerCase())) {
                             console.log("before change")
                             console.log(cards[i]);
                             let title = updateFName + " " + updateLName;
@@ -223,8 +225,11 @@ async function makeContacts(contacts) {
                             console.log("id:" + updateId);
                             console.log("after")
                             console.log(cards[i]);
-                            console.log("searched Card " + searchedCard);
-                            console.log("text Content " + textContent)
+                            console.log("updated values");
+                            console.log(updateFName);
+                            console.log(updateLName);
+                            console.log(updateNum);
+
                             try {
                                 let payload = JSON.stringify({
                                     'FirstName': updateFName,
