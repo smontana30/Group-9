@@ -157,7 +157,11 @@ async function makeContacts(contacts) {
 
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
-        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
+
+        let randoSprite = Math.floor(Math.random() * (649 - 1) + 1);
+        console.log(Math.random());
+        // cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
+        cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/images/pokeSprites/spritesFolder/Pokemon/BW/" + divBody.id.split(" ")[1] + ".png";
         let lName = el.LastName == undefined ? "lastname" : el.LastName;
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
@@ -436,8 +440,8 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    if (userId < 0)
-        window.location.href = "login.html";
+    // if (userId < 0)
+    //     window.location.href = "login.html";
 
     console.log("Fetched userId: " + userId);
     return userId;
