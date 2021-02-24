@@ -214,13 +214,7 @@ async function makeContacts(contacts) {
                         if (searchedCard.toLowerCase().match(textContent.toLowerCase())) {
                             console.log("before change")
                             console.log(cards[i]);
-                            if (updateLName == undefined) {
-                                updateLName = lName;
-                            } else if (updateFName == undefined) {
-                                updateFName = fName;
-                            } else if (updateNum == undefined) {
-                                updateNum = number;
-                            }
+
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
                             updateId = cards[i].id;
@@ -267,7 +261,7 @@ async function makeContacts(contacts) {
 
                     // modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
                     // modalphoneUP.innerText = "Phone: " + updateNum;
-                    await getContacts();
+                    // await getContacts();
                 });
 
             });
