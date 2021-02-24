@@ -10,7 +10,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body onload="getContacts()">
@@ -70,27 +73,26 @@
                             Update Contact
                         </div>
                         <div class="modal-body">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
-                                <input id="updateFname" type="text" class="form-control" autocomplete="on">
-                            </div>
+                            <form action="post">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">First Name</span>
+                                    <input id="updateFname" type="text" class="form-control" autocomplete="on">
+                                </div>
 
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Last Name</span>
-                                <input autocomplete="on" id="updateLast" type="text" class="form-control" >
-                            </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Last Name</span>
+                                    <input autocomplete="on" id="updateLast" type="text" class="form-control">
+                                </div>
 
-                            <div class="input-group mb-3">
-                                <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
-                                <input id="updateNum" type="text" class="form-control" autocomplete="on">
-                            </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Phone Number</span>
+                                    <input id="updateNum" type="text" class="form-control" autocomplete="on">
+                                </div>
+                            </form>
                         </div>
                         <div class="modal-footer">
                             <button id="updateBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Update
-                            </button>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                Delete
+                                Save Updates
                             </button>
                         </div>
                     </div>
@@ -131,15 +133,25 @@
 
             </div>
 
-            <button id="showMore" onclick="showMore()" type="button" class="btn btn-secondary" >Show More</button>
+
 
         </div>
 
-        
-        <button id="toTop" type="button" class="btn btn-secondary">Back to Top</button>
-
+        <div id="more">
+            <button id="showMore" onclick="showMore()" type="button" class="btn btn-secondary">
+                Show more
+                
+            </button>
+        </div>
     </div>
 
+
+
+    <div id="scroll">
+        <button id="toTop" onclick="scrollToTop()" type="button" class="btn btn-secondary">
+            <i class="fas fa-angle-double-up fa-2x"></i>
+        </button>
+    </div>
 </body>
 
 </html>

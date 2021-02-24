@@ -36,7 +36,7 @@ function addContact() {
     document.getElementById('firstName').value = "";
     document.getElementById('lastName').value = "";
     document.getElementById('phone-number').value = "";
-    
+
     // getContacts();
 }
 
@@ -65,16 +65,16 @@ async function getContactsWithSearch() {
     // - length: The number of contacts to return.
     // - offset: Number of contacts to skip in the array being returned.
     // - query : Search string applied to each individual column of the database.
-    
+
     const params = '?UserID=' + getUserID() + '&length=' + length + '&offset=' + offset + '&query=' + searchBar.value;
-    
+
     // If someone attempts to query an empty string, return all the contacts.
     if (searchBar.value == '') {
         alert("Error: Please search for a valid user");
         //getContacts();
         return;
     }
-    
+
     fetchContactsWithUrl(url + params);
 }
 
@@ -88,9 +88,9 @@ async function getAllContactsWithSearch() {
     // - length: The number of contacts to return.
     // - offset: Number of contacts to skip in the array being returned.
     // - query : Search string applied to each individual column of the database.
-    
+
     const params = '?UserID=' + getUserID();
-    
+
     fetchContactsWithUrl(url + params);
 }
 
@@ -132,7 +132,7 @@ async function makeContacts(contacts) {
     // getting out list element
     let div = document.getElementById('card');
 
-    
+
     contacts.results.forEach(el => {
 
         let divBody = document.createElement("div");
@@ -175,9 +175,11 @@ async function makeContacts(contacts) {
         let cardDiv = document.createElement("div");
         cardDiv.setAttribute('class', "card");
         cardDiv.setAttribute('id', el.ID);
-        cardDiv.addEventListener('click', function() {
-            this.setAttribute('data-bs-toggle', 'modal');
-            this.setAttribute('data-bs-target', '#myModal3');
+        cardDiv.setAttribute('data-bs-toggle', 'modal');
+        cardDiv.setAttribute('data-bs-target', '#myModal3');
+
+        cardDiv.addEventListener('click', function(e) {
+
             let modal = document.getElementById('modal3');
             let modalname = document.getElementById('fullName');
             let modalphone = document.getElementById('phNumber');
@@ -198,7 +200,7 @@ async function makeContacts(contacts) {
                     let updateFName = (document.getElementById('updateFname').value !== "") ? document.getElementById('updateFname').value : fName;
                     let updateLName = (document.getElementById('updateLast').value !== "") ? document.getElementById('updateLast').value : lName;
                     let updateNum = (document.getElementById('updateNum').value !== "") ? document.getElementById('updateNum').value : number;
-                    
+
                     let updateId;
                     for (let i = 0; i < cards.length; i++) {
                         let cardTitle = cards[i].getElementsByClassName('card-title')[0];
@@ -214,7 +216,7 @@ async function makeContacts(contacts) {
                             cardText.innerText = text;
                             let letter = updateFName.toLowerCase().charAt(0);
                             cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + letter + ".png";
-                            
+
                             try {
                                 let payload = JSON.stringify({
                                     'FirstName': updateFName,
@@ -223,7 +225,7 @@ async function makeContacts(contacts) {
                                     'ID': updateId,
                                     'UserID': getUserID()
                                 });
-                        
+
                                 let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
                                 let xhr = new XMLHttpRequest();
                                 xhr.open("POST", url, false);
@@ -240,17 +242,15 @@ async function makeContacts(contacts) {
                     // let modalUp = document.getElementById('modal3');
                     // let modalnameUp = document.getElementById('fullName');
                     // let modalphoneUP = document.getElementById('phNumber');
-    
+
                     // modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
                     // modalphoneUP.innerText = "Phone: " + updateNum;
                     await getContacts();
                 });
-                
-
                 document.getElementById('updateFname').value = "";
                 document.getElementById('updateLast').value = "";
                 document.getElementById('updateNum').value = "";
-                
+
             });
 
             let deleteBtn = document.getElementById('modal3delete');
@@ -286,7 +286,7 @@ async function makeContacts(contacts) {
             });
 
         });
-        
+
 
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
@@ -295,7 +295,7 @@ async function makeContacts(contacts) {
         cardDiv.appendChild(cardimg);
         cardDiv.appendChild(divBody);
         div.appendChild(cardDiv);
-        
+
 
         id++;
     });
@@ -306,7 +306,7 @@ async function makeContacts(contacts) {
 function showMore() {
     currentLen += 4;
     getContacts();
-    
+
 }
 
 // searches only contacts on the screen
@@ -345,7 +345,7 @@ function search() {
 // matching the what is on the search bar
 async function searchWithApi() {
     let contacts = null;
-    let object = {"results":[]}
+    let object = { "results": [] }
     let searchBar = document.getElementById("search");
     let filter = searchBar.value.toLowerCase();
 
@@ -362,7 +362,7 @@ async function searchWithApi() {
         .then(response => response.json())
         .then(results => { contacts = results })
         .catch(_error => { console.log("Error with fetching Group9 API contacts.") });
-    
+
     await contacts.results.forEach(el => {
         str = el.FirstName + " " + el.LastName;
         if (str.toLowerCase().includes(filter)) {
@@ -378,7 +378,7 @@ async function searchWithApi() {
 // create a card for the new contact
 async function getNewContact(newCon) {
     let contacts = null;
-    let object = {"results":[]}
+    let object = { "results": [] }
 
     const url = 'http://tinytelephonetime.ninja/api/get_contacts.php' + '?UserID=' + getUserID();
 
@@ -387,7 +387,7 @@ async function getNewContact(newCon) {
         .then(response => response.json())
         .then(results => { contacts = results })
         .catch(_error => { console.log("Error with fetching Group9 API contacts.") });
-    
+
     await contacts.results.forEach(el => {
         str = el.FirstName + " " + el.LastName;
         if (str.toLowerCase().includes(newCon)) {
@@ -397,6 +397,16 @@ async function getNewContact(newCon) {
 
     // Display contact cards.
     await makeContacts(object);
+}
+
+function scrollToTop() {
+    let scrollToTopBtn = document.getElementById('toTop');
+    let rootEl = document.documentElement;
+
+    rootEl.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    })
 }
 
 // Fetches the UserID from document.cookie to make API calls.
@@ -421,8 +431,7 @@ function getUserID() {
     return userId;
 }
 
-function doLogout()
-{
+function doLogout() {
     document.cookie = "userId=-1; expires = Thu, 01 Jan 1970 00:00:00 GMT";
     window.location.href = "login.html";
 }
