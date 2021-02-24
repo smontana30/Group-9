@@ -41,3 +41,7 @@ function signup() {
         console.error("Error:\n" + err);
     }
 }
+
+function backtoLogin() {
+    window.location.href = "login.html";
+}

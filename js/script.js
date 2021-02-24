@@ -35,7 +35,6 @@ function addContact() {
         // document.getElementById("error-tag").innerHTML = err.message;
         console.error("Error:\n" + error)
     }
-    currentLen++;
     getNewContact(firstName + " " + lastName);
 
     document.getElementById("firstName").value = "";
