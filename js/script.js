@@ -13,6 +13,11 @@ function addContact() {
     // Create a function to remove any non-digits from the phone number.
     let phoneNum = document.getElementById('phone-number').value;
 
+    // if any of these input values are empty initalize with default values
+    firstName = (firstName === "") ? "Felix" : firstName;
+    lastName = (lastName === "") ? "Sanchez" : lastName;
+    phoneNum = (phoneNum === "") ? "3057650427" : phoneNum;
+
     try {
         let payload = JSON.stringify({
             'FirstName': firstName,
@@ -133,6 +138,7 @@ async function makeContacts(contacts) {
 
         id = el.ID == undefined ? id : el.ID;
 
+        // creating our card elements and giving them the bootstrap styles
         let divBody = document.createElement("div");
         divBody.setAttribute('class', "card-body");
         divBody.setAttribute('id', "cardbody " + id);
@@ -173,6 +179,7 @@ async function makeContacts(contacts) {
             }
         }
 
+        // appending our first and last name and number to cards
         cardTitle.appendChild(document.createTextNode(fName + " " + lName));
         cardText.appendChild(document.createTextNode(number));
 
@@ -194,6 +201,7 @@ async function makeContacts(contacts) {
         updateBtn.setAttribute('data-bs-toggle', "modal");
         updateBtn.setAttribute('data-bs-target', "#myModal2");
 
+        // onclick save card id to unique cards update modal
         updateBtn.addEventListener('click', function() {
             let currId = this.id.split(" ");
             let contactId = document.getElementsByClassName('updateContactId');
@@ -237,7 +245,7 @@ async function makeContacts(contacts) {
             }
         });
 
-
+        // adding of the different parts together
         divBody.appendChild(cardTitle);
         divBody.appendChild(cardText);
         divBody.appendChild(updateBtn);
@@ -254,10 +262,12 @@ async function makeContacts(contacts) {
 }
 
 function updateCard() {
+    // extracting the cards user id from modal span to know which specific card to update
     let d = document.getElementsByClassName('updateContactId');
     let modalId = d[0].id.split(" ");
     modalId = modalId[1];
 
+    // grabbing our html elements we will be maniplulating
     let name = document.getElementById("updateFname").value;
     let lastName = document.getElementById("updateLast").value;
     let number = document.getElementById("updateNum").value;
@@ -266,6 +276,7 @@ function updateCard() {
     let img = document.getElementById('cardimg ' + modalId);
     let text = document.getElementById('cardtext ' + modalId);
 
+    // if any of these input values are empty initalize with default values
     name = (name === "") ? title.innerText.split(' ')[0] : name;
     lastName = (lastName === "") ? title.innerText.split(' ')[1] : lastName;
     number = (number === "") ? text.innerText : number;
@@ -276,6 +287,7 @@ function updateCard() {
     title.innerText = name + " " + lastName;
     text.innerText = number;
 
+    // sending updated values to update api 
     try {
         let payload = JSON.stringify({
             'FirstName': name,
@@ -296,6 +308,7 @@ function updateCard() {
         console.error("Error:\n" + error)
     }
 
+    // reseting input values
     document.getElementById("updateFname").value = "";
     document.getElementById("updateLast").value = "";
     document.getElementById("updateNum").value = "";
@@ -304,7 +317,6 @@ function updateCard() {
 function showMore() {
     currentLen += 4;
     getContacts();
-
 }
 
 // searches only contacts on the screen
@@ -332,6 +344,7 @@ function search() {
     }
 
     searchBar.addEventListener("keydown", function(event) {
+        // ensure that this only triggers when we press down on the enter key
         if (event.key == "Enter" || event.keycode == 13) {
             console.log("enter has been pressed");
             searchWithApi();
@@ -397,8 +410,11 @@ async function getNewContact(newCon) {
     await makeContacts(object);
 }
 
+// simple function that from a give point scrolls to top of page
 function scrollToTop() {
+    // grabbing the button that triggers scroll
     let scrollToTopBtn = document.getElementById('toTop');
+    // getting it's parent element
     let rootEl = document.documentElement;
 
     rootEl.scrollTo({
