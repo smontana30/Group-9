@@ -158,11 +158,8 @@ async function makeContacts(contacts) {
         // attempting to add image but it wasn't working and i got frustated 
         let firLetter = fName.toLowerCase().charAt(0);
 
-        // let randoSprite = Math.floor(Math.random() * (649 - 1) + 1);
-        // console.log(Math.random());
         cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/assets/letters/png/" + firLetter + ".png";
 
-        // cardimg.src = "https://raw.githubusercontent.com/smontana30/Group-9/master/images/pokeSprites/spritesFolder/Pokemon/BW/" + divBody.id.split(" ")[1] + ".png";
         let lName = el.LastName == undefined ? "lastname" : el.LastName;
         let number = el.Phone == undefined ? "1231231234" : el.Phone;
 
@@ -264,11 +261,9 @@ async function makeContacts(contacts) {
 }
 
 function updateCard() {
-    // console.log("id passed in " + id);
     let d = document.getElementsByClassName('updateContactId');
     let modalId = d[0].id.split(" ");
     modalId = modalId[1];
-    console.log(modalId);
 
     let name = document.getElementById("updateFname").value;
     let lastName = document.getElementById("updateLast").value;
@@ -277,13 +272,6 @@ function updateCard() {
     let title = document.getElementById('cardtitle ' + modalId);
     let img = document.getElementById('cardimg ' + modalId);
     let text = document.getElementById('cardtext ' + modalId);
-
-    console.log('title ');
-    console.log(title.innerText);
-    console.log("img ");
-    console.log(img);
-    console.log('text');
-    console.log(text)
 
     name = (name === "") ? title.innerText.split(' ')[0] : name;
     lastName = (lastName === "") ? title.innerText.split(' ')[1] : lastName;
