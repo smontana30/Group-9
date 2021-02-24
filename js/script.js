@@ -302,7 +302,7 @@ function updateCard() {
 }
 
 function showMore() {
-    currentLen += 6;
+    currentLen += 3;
     getContacts();
 
 }
