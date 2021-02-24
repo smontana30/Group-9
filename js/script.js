@@ -501,6 +501,26 @@ function updateCard() {
     title.innerText = name + " " + lastName;
     text.innerText = number;
 
+    try {
+        let payload = JSON.stringify({
+            'FirstName': name,
+            'LastName': lastName,
+            'Phone': number,
+            'ID': modalId,
+            'UserID': getUserID()
+        });
+
+        let url = "http://tinytelephonetime.ninja/api/edit_contact.php";
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, false);
+        xhr.setRequestHeader("Content-type", "application/json", "charset=UTF-8");
+        xhr.send(payload);
+    } catch (error) {
+        // If we get here, there was likely an issue with the API.
+        // document.getElementById("error-tag").innerHTML = err.message;
+        console.error("Error:\n" + error)
+    }
+
     document.getElementById("updateFname").value = "";
     document.getElementById("updateLast").value = "";
     document.getElementById("updateNum").value = "";
@@ -627,8 +647,8 @@ function getUserID() {
     }
 
     // If we couldn't find the ID, redirect to login screen.
-    // if (userId < 0)
-    //     window.location.href = "login.html";
+    if (userId < 0)
+        window.location.href = "login.html";
 
     console.log("Fetched userId: " + userId);
     return userId;
