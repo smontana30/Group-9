@@ -208,7 +208,7 @@ async function makeContacts(contacts) {
                         let cardimg = cards[i].getElementsByClassName('card-img-top')[0];
                         let textContent = cardTitle.textContent;
                         let searchedCard = fName + " " + lName;
-                        if (textContent == searchedCard) {
+                        if (searchedCard.match(textContent)) {
                             let title = updateFName + " " + updateLName;
                             let text = updateNum;
                             updateId = cards[i].id;
@@ -242,14 +242,15 @@ async function makeContacts(contacts) {
                     // let modalUp = document.getElementById('modal3');
                     // let modalnameUp = document.getElementById('fullName');
                     // let modalphoneUP = document.getElementById('phNumber');
+                    document.getElementById('updateFname').value = "";
+                    document.getElementById('updateLast').value = "";
+                    document.getElementById('updateNum').value = "";
 
                     // modalnameUp.innerHTML = "Name: " + updateFName + " " + updateLName;
                     // modalphoneUP.innerText = "Phone: " + updateNum;
                     await getContacts();
                 });
-                document.getElementById('updateFname').value = "";
-                document.getElementById('updateLast').value = "";
-                document.getElementById('updateNum').value = "";
+
 
             });
 
